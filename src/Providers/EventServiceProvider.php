@@ -3,7 +3,7 @@
 namespace Latus\BasePlugin\Providers;
 
 use Latus\BasePlugin\Listeners\AddItemsToAdminNav;
-use Latus\UI\Events\AdminNavDefined;
+use Latus\BasePlugin\Events\AdminNavDefined;
 
 class EventServiceProvider extends \Illuminate\Events\EventServiceProvider
 {

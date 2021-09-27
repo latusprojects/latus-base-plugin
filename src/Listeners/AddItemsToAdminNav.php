@@ -2,7 +2,7 @@
 
 namespace Latus\BasePlugin\Listeners;
 
-use Latus\UI\Events\AdminNavDefined;
+use Latus\BasePlugin\Events\AdminNavDefined;
 use Latus\UI\Exceptions\BuilderNotDefinedException;
 use Latus\UI\Exceptions\ParentNotDefinedException;
 use Latus\UI\Navigation\Builder;

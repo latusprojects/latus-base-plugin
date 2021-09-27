@@ -13,7 +13,7 @@ use Latus\BasePlugin\Modules\Contracts\WebModule;
 use Latus\BasePluginDatabase\Seeders\DatabaseSeeder;
 use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
-use Latus\UI\Events\AdminNavDefined;
+use Latus\BasePlugin\Events\AdminNavDefined;
 use Latus\UI\Providers\Traits\DefinesModules;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
 
