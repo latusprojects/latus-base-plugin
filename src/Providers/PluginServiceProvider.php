@@ -2,7 +2,6 @@
 
 namespace Latus\BasePlugin\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Latus\BasePlugin\Http\Controllers\AdminController;
 use Latus\BasePlugin\Http\Controllers\AuthController;
