@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Latus\UI\Components\Contracts\ModuleComponent;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\UI\Services\ComponentService;
-use Latus\UI\Widgets\AdminNav;
+use Latus\BasePlugin\UI\Widgets\AdminNav;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdminController extends Controller

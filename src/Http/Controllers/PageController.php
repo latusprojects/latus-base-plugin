@@ -9,7 +9,7 @@ use Latus\BasePlugin\Http\Requests\Page\StorePageRequest;
 use Latus\BasePlugin\Http\Requests\Page\UpdatePageRequest;
 use Latus\BasePlugin\Models\Page;
 use Latus\UI\Services\ComponentService;
-use Latus\UI\Widgets\AdminNav;
+use Latus\BasePlugin\UI\Widgets\AdminNav;
 
 class PageController extends AdminController
 {

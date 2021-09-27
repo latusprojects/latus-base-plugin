@@ -15,7 +15,7 @@ use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\UI\Events\AdminNavDefined;
 use Latus\UI\Providers\Traits\DefinesModules;
-use Latus\UI\Widgets\AdminNav;
+use Latus\BasePlugin\UI\Widgets\AdminNav;
 
 class PluginServiceProvider extends ServiceProvider
 {
