@@ -1,0 +1,98 @@
+<?php
+
+namespace Latus\BasePlugin\Http\Controllers;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
+use Latus\Content\Services\ContentService;
+use Latus\BasePlugin\Http\Requests\Page\StorePageRequest;
+use Latus\BasePlugin\Http\Requests\Page\UpdatePageRequest;
+use Latus\BasePlugin\Models\Page;
+use Latus\UI\Services\ComponentService;
+use Latus\UI\Widgets\AdminNav;
+
+class PageController extends AdminController
+{
+
+    public function __construct(ComponentService $componentService, AdminNav $adminNav)
+    {
+        parent::__construct($componentService, $adminNav);
+
+        $this->authorizeResource(Page::class, 'page');
+    }
+
+    public function index(ContentService $contentService): View
+    {
+        return $this->returnView(view('latus::admin.content.page.index')->with(['pages' => $contentService->paginateContent('page', 15,
+            function ($page) {
+                return auth()->user()->can('view', $page);
+            }
+        )]), 'content.page.index');
+    }
+
+    public function create(): View
+    {
+        return $this->returnView(view('latus::admin.content.page.create'), 'content.page.create');
+    }
+
+    public function store(StorePageRequest $request, ContentService $contentService): JsonResponse
+    {
+        $validatedInput = $request->validated();
+
+        try {
+            $page = $contentService->createContent([
+                'type' => 'page',
+                'name' => 'page--' . microtime(),
+                'owner_model_class' => get_class(auth()->user()),
+                'owner_model_id' => auth()->user()->id,
+                'title' => $validatedInput['title'],
+                'text' => $validatedInput['text'],
+            ]);
+        } catch (\InvalidArgumentException) {
+            return \response('Bad Request', 400)->json([
+                'message' => 'content-service attribute validation failed'
+            ]);
+        }
+
+        return \response()->json([
+            'message' => 'page created',
+            'data' => [
+                'created_at' => $page->getCreatedAtColumn()
+            ]
+        ]);
+    }
+
+    public function edit(Page $page): View
+    {
+        return $this->returnView(view('latus::admin.content.page.edit')->with(['page' => $page]), 'content.page.edit');
+    }
+
+    public function update(Page $page, UpdatePageRequest $request, ContentService $contentService): JsonResponse
+    {
+        $validatedInput = $request->validated();
+
+        $contentService->setTitleOfContent($page, $validatedInput['title']);
+        $contentService->setTextOfContent($page, $validatedInput['text']);
+
+        return \response()->json([
+            'message' => 'page updated',
+            'data' => [
+                'updated_at' => $page->getUpdatedAtColumn()
+            ]
+        ]);
+    }
+
+    public function destroy(Page $page, ContentService $contentService)
+    {
+        $contentService->deleteContent($page);
+
+        return \response()->json([
+            'message' => 'page deleted'
+        ]);
+    }
+
+    public function show(Page $page): View
+    {
+        return $this->returnView(view('latus::admin.content.page.show')->with(['page' => $page]), 'content.page.show');
+    }
+}
