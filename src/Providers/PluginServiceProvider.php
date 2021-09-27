@@ -55,6 +55,17 @@ class PluginServiceProvider extends ServiceProvider
         });
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/routes.php', 'latus-routes');
+
+        $this->registerServiceProviders();
+    }
+
+    /**
+     * Register additional service-providers
+     */
+    protected function registerServiceProviders()
+    {
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
 
     protected function buildAdminNav()
