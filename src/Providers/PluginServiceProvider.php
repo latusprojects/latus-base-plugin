@@ -16,10 +16,11 @@ use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\BasePlugin\Events\AdminNavDefined;
 use Latus\UI\Providers\Traits\DefinesModules;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
+use Latus\UI\Providers\Traits\ProvidesWidgets;
 
 class PluginServiceProvider extends ServiceProvider
 {
-    use RegistersSeeders, DefinesModules;
+    use RegistersSeeders, DefinesModules, ProvidesWidgets;
 
     /**
      * Register services.
@@ -45,6 +46,10 @@ class PluginServiceProvider extends ServiceProvider
                 'alias' => 'web',
                 'controller' => WebController::class,
             ],
+        ]);
+
+        $this->provideWidgets([
+            'admin-nav' => AdminNav::class
         ]);
 
         BuildPackageDependencies::addDependencyClosure(function () {
