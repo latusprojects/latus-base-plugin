@@ -9,7 +9,7 @@ use Latus\BasePlugin\Http\Requests\Page\StorePageRequest;
 use Latus\BasePlugin\Http\Requests\Page\UpdatePageRequest;
 use Latus\BasePlugin\Models\Page;
 use Latus\UI\Services\ComponentService;
-use Latus\UI\Widgets\AdminNav;
+use Latus\BasePlugin\UI\Widgets\AdminNav;
 
 class PageController extends AdminController
 {
@@ -49,12 +49,12 @@ class PageController extends AdminController
                 'text' => $validatedInput['text'],
             ]);
         } catch (\InvalidArgumentException) {
-            return \response('Bad Request', 400)->json([
+            return response('Bad Request', 400)->json([
                 'message' => 'content-service attribute validation failed'
             ]);
         }
 
-        return \response()->json([
+        return response()->json([
             'message' => 'page created',
             'data' => [
                 'created_at' => $page->getCreatedAtColumn()
@@ -74,7 +74,7 @@ class PageController extends AdminController
         $contentService->setTitleOfContent($page, $validatedInput['title']);
         $contentService->setTextOfContent($page, $validatedInput['text']);
 
-        return \response()->json([
+        return response()->json([
             'message' => 'page updated',
             'data' => [
                 'updated_at' => $page->getUpdatedAtColumn()
@@ -86,7 +86,7 @@ class PageController extends AdminController
     {
         $contentService->deleteContent($page);
 
-        return \response()->json([
+        return response()->json([
             'message' => 'page deleted'
         ]);
     }
