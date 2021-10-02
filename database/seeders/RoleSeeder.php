@@ -27,7 +27,9 @@ class RoleSeeder extends Seeder
     public function run()
     {
         foreach (self::ROLES as $role) {
-            $this->roleService->createRole($role);
+            if (!$this->roleService->findByName($role['name'])) {
+                $this->roleService->createRole($role);
+            }
         }
     }
 }
