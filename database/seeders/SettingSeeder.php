@@ -1,14 +1,11 @@
 <?php
 
 
-namespace Latus\BasePluginDatabase\Seeders;
+namespace Latus\BasePlugin\Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
-use Latus\BasePlugin\Modules\Contracts\AuthModule;
-use Latus\BasePlugin\Modules\Contracts\WebModule;
 use Latus\Settings\Services\SettingService;
-use Latus\BasePlugin\Modules\Contracts\AdminModule;
 
 class SettingSeeder extends Seeder
 {

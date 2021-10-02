@@ -9,7 +9,7 @@ use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
-use Latus\BasePluginDatabase\Seeders\DatabaseSeeder;
+use Latus\BasePlugin\Database\Seeders\DatabaseSeeder;
 use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\BasePlugin\Events\AdminNavDefined;
