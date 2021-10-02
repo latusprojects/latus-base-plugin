@@ -21,6 +21,8 @@ class PluginServiceProvider extends ServiceProvider
 {
     use RegistersSeeders, DefinesModules, ProvidesWidgets;
 
+    public const PLUGIN_NAME = 'latusprojects/latus-base-plugin';
+
     /**
      * Register services.
      *
@@ -28,10 +30,6 @@ class PluginServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerSeeders([
-            DatabaseSeeder::class
-        ]);
-
         $this->defineModules([
             AdminModule::class => [
                 'alias' => 'admin',
