@@ -1,6 +1,6 @@
 <?php
 
-namespace Latus\BasePluginDatabase\Seeders;
+namespace Latus\BasePlugin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Latus\Permissions\Services\RoleService;
@@ -27,7 +27,9 @@ class RoleSeeder extends Seeder
     public function run()
     {
         foreach (self::ROLES as $role) {
-            $this->roleService->createRole($role);
+            if (!$this->roleService->findByName($role['name'])) {
+                $this->roleService->createRole($role);
+            }
         }
     }
 }

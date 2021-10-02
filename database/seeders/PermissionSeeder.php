@@ -1,6 +1,6 @@
 <?php
 
-namespace Latus\BasePluginDatabase\Seeders;
+namespace Latus\BasePlugin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Latus\Permissions\Services\PermissionService;
@@ -150,7 +150,9 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         foreach (self::PERMISSIONS as $permission) {
-            $this->permissionService->createPermission($permission);
+            if (!$this->permissionService->findByName($permission['name'])) {
+                $this->permissionService->createPermission($permission);
+            }
         }
     }
 }

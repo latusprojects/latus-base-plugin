@@ -9,7 +9,7 @@ use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
-use Latus\BasePluginDatabase\Seeders\DatabaseSeeder;
+use Latus\BasePlugin\Database\Seeders\DatabaseSeeder;
 use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\BasePlugin\Events\AdminNavDefined;
@@ -21,6 +21,8 @@ class PluginServiceProvider extends ServiceProvider
 {
     use RegistersSeeders, DefinesModules, ProvidesWidgets;
 
+    public const PLUGIN_NAME = 'latusprojects/latus-base-plugin';
+
     /**
      * Register services.
      *
@@ -28,10 +30,6 @@ class PluginServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerSeeders([
-            DatabaseSeeder::class
-        ]);
-
         $this->defineModules([
             AdminModule::class => [
                 'alias' => 'admin',

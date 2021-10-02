@@ -1,6 +1,6 @@
 <?php
 
-namespace Latus\BasePluginDatabase\Seeders;
+namespace Latus\BasePlugin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 

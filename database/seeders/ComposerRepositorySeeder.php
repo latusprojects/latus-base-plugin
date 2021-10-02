@@ -1,6 +1,6 @@
 <?php
 
-namespace Latus\BasePluginDatabase\Seeders;
+namespace Latus\BasePlugin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Latus\Plugins\Models\ComposerRepository;
@@ -28,7 +28,9 @@ class ComposerRepositorySeeder extends Seeder
     public function run()
     {
         foreach (self::COMPOSER_REPOSITORIES as $repository) {
-            $this->repositoryService->createRepository($repository);
+            if (!$this->repositoryService->findByName($repository['name'])) {
+                $this->repositoryService->createRepository($repository);
+            }
         }
     }
 }
