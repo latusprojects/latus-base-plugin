@@ -30,10 +30,12 @@ class SettingSeeder extends Seeder
     public function run()
     {
         foreach (self::SETTINGS as $setting) {
-            if (is_array($setting['value'])) {
-                $setting['value'] = json_encode($setting['value']);
+            if (!$this->settingService->findByKey($setting['key'])) {
+                if (is_array($setting['value'])) {
+                    $setting['value'] = json_encode($setting['value']);
+                }
+                $this->settingService->createSetting($setting);
             }
-            $this->settingService->createSetting($setting);
         }
     }
 
