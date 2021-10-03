@@ -6,9 +6,9 @@ use Latus\BasePlugin\Listeners\AddItemsToAdminNav;
 use Latus\BasePlugin\Events\AdminNavDefined;
 use Latus\BasePlugin\Listeners\InstallPlugin;
 
-class EventServiceProvider extends \Illuminate\Events\EventServiceProvider
+class EventServiceProvider extends \Illuminate\Foundation\Support\Providers\EventServiceProvider
 {
-    protected array $listen = [
+    protected $listen = [
         AdminNavDefined::class => [
             AddItemsToAdminNav::class
         ],
