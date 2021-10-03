@@ -14,6 +14,9 @@ class EventServiceProvider extends \Illuminate\Foundation\Support\Providers\Even
         ],
         'latus.package.installed.' . PluginServiceProvider::PLUGIN_NAME => [
             InstallPlugin::class,
-        ]
+        ],
+        'latus.package.updated.' . PluginServiceProvider::PLUGIN_NAME => [
+            InstallPlugin::class,
+        ],
     ];
 }
