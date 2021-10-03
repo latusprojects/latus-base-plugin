@@ -13,7 +13,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Latus\\BasePlugin\\": "src/"
+      "Latus\\BasePlugin\\": "src/",
+      "Latus\\BasePlugin\\Database\\Seeders\\": "database/seeders/"
     }
   },
   "extra": {
@@ -21,6 +22,9 @@
       "providers": [
         "Latus\\BasePlugin\\Providers\\PluginServiceProvider"
       ]
+    },
+    "branch-alias": {
+      "dev-develop": "0.1.x-dev"
     }
   },
   "repositories": {
