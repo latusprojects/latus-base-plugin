@@ -4,7 +4,6 @@ namespace Latus\BasePlugin\Http\Controllers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Latus\BasePlugin\Http\Requests\AuthenticateUserRequest;
@@ -50,9 +49,9 @@ class AuthController extends Controller
      * Returns the page-view or an error-response
      *
      * @param string $page
-     * @return Response|View
+     * @return View
      */
-    protected function getPageViewOrAbort(string $page): Response|View
+    protected function getPageViewOrAbort(string $page): View
     {
         $pageView = null;
 
@@ -69,9 +68,9 @@ class AuthController extends Controller
      * Returns the login-view or an error-response
      *
      * @Route("/auth/login", methods={"GET"})
-     * @return Response|View
+     * @return View
      */
-    public function showLogin(): Response|View
+    public function showLogin(): View
     {
         return $this->getPageViewOrAbort('login');
     }
@@ -80,9 +79,9 @@ class AuthController extends Controller
      * Returns the login-view with support for multi-factor-authentication or an error-response
      *
      * @Route("/auth/mfa-login", methods={"GET"})
-     * @return Response|View
+     * @return View
      */
-    public function showMultiFactorLogin(): Response|View
+    public function showMultiFactorLogin(): View
     {
         return $this->getPageViewOrAbort('multiFactorLogin');
     }
@@ -93,14 +92,14 @@ class AuthController extends Controller
      *
      * @Route("/auth/submit", methods={"POST"})
      * @param AuthenticateUserRequest $request
-     * @return Response|JsonResponse
+     * @return JsonResponse
      */
-    public function authenticate(AuthenticateUserRequest $request): Response|JsonResponse
+    public function authenticate(AuthenticateUserRequest $request): JsonResponse
     {
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
 
-            return \response()->json([
+            return response()->json([
                 'message' => 'user authenticated',
                 'data' => [
                     'prefer_target' => false
@@ -108,7 +107,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return \response('Not Found', 404)->json([
+        return response('Not Found', 404)->json([
             'message' => 'user not found'
         ]);
     }
@@ -117,9 +116,9 @@ class AuthController extends Controller
      * Returns the login-view or an error-response
      *
      * @Route("/auth/register", methods={"GET"})
-     * @return Response|View
+     * @return View
      */
-    public function showRegister(): Response|View
+    public function showRegister(): View
     {
         return $this->getPageViewOrAbort('register');
     }
@@ -130,21 +129,21 @@ class AuthController extends Controller
      * @Route("/auth/store", methods={"PUT"})
      * @param StoreUserRequest $request
      * @param UserService $userService
-     * @return Response|JsonResponse
+     * @return JsonResponse
      */
-    public function store(StoreUserRequest $request, UserService $userService): Response|JsonResponse
+    public function store(StoreUserRequest $request, UserService $userService): JsonResponse
     {
         $validatedInput = $request->validated();
 
         try {
             $user = $userService->createUser($validatedInput);
         } catch (\InvalidArgumentException $e) {
-            return \response('Bad Request', 400)->json([
+            return response('Bad Request', 400)->json([
                 'message' => 'user-service attribute validation failed'
             ]);
         }
 
-        return \response()->json([
+        return response()->json([
             'message' => 'user created',
             'data' => [
                 'created_at' => $user->getCreatedAtColumn()
