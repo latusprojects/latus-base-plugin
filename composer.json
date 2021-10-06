@@ -23,6 +23,17 @@
         "Latus\\BasePlugin\\Providers\\PluginServiceProvider"
       ]
     },
+    "latus": {
+      "package-events": {
+        "installed": [
+          "Latus\\BasePlugin\\Listeners\\InstallPlugin"
+        ],
+        "updated": [
+          "Latus\\BasePlugin\\Listeners\\InstallPlugin"
+        ],
+        "uninstall": []
+      }
+    },
     "branch-alias": {
       "dev-develop": "0.1.x-dev"
     }
