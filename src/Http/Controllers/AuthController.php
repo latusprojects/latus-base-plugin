@@ -107,9 +107,9 @@ class AuthController extends Controller
             ]);
         }
 
-        return response('Not Found', 404)->json([
+        return response()->json([
             'message' => 'user not found'
-        ]);
+        ], 404);
     }
 
     /**
@@ -138,9 +138,9 @@ class AuthController extends Controller
         try {
             $user = $userService->createUser($validatedInput);
         } catch (\InvalidArgumentException $e) {
-            return response('Bad Request', 400)->json([
+            return response()->json([
                 'message' => 'user-service attribute validation failed'
-            ]);
+            ], 400);
         }
 
         return response()->json([

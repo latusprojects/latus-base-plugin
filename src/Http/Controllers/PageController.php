@@ -49,9 +49,9 @@ class PageController extends AdminController
                 'text' => $validatedInput['text'],
             ]);
         } catch (\InvalidArgumentException) {
-            return response('Bad Request', 400)->json([
+            return response()->json([
                 'message' => 'content-service attribute validation failed'
-            ]);
+            ], 400);
         }
 
         return response()->json([
