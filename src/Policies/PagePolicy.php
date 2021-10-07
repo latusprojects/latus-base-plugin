@@ -23,7 +23,7 @@ class PagePolicy
     public function view(User $user, Page $page): bool
     {
         return ($page->owner_model_class === get_class($user) && $page->owner_model_id === $user->id)
-            || ($this->userService->userHasPermissionByString($user, 'content.page.view') && $this->userService->userHasPermissionByString($user, 'content.page.index'));
+            || ($this->userService->userHasPermissionByString($user, 'content.page.show') && $this->userService->userHasPermissionByString($user, 'content.page.index'));
     }
 
     public function create(User $user): bool
