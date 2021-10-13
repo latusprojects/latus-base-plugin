@@ -9,9 +9,11 @@ use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
+use Latus\Content\Services\ContentService;
 use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\BasePlugin\Events\AdminNavDefined;
+use Latus\PluginAPI\Latus;
 use Latus\UI\Providers\Traits\DefinesModules;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
 use Latus\UI\Providers\Traits\ProvidesWidgets;
@@ -66,7 +68,6 @@ class PluginServiceProvider extends ServiceProvider
     protected function registerServiceProviders()
     {
         $this->app->register(AuthServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
     }
 
@@ -79,5 +80,40 @@ class PluginServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'latus');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'latus');
+
+        $this->createMacros();
+
+        $this->app->register(RouteServiceProvider::class);
+    }
+
+    protected function createMacros()
+    {
+        Latus::macro('pages', function (array $pageNames, string $prefix = 'page--') {
+            $pageNames = preg_filter('/^/', $prefix, $pageNames);
+            $contentService = app(ContentService::class);
+
+            return $contentService->getByNames($pageNames);
+        });
+
+        Latus::macro('page', function (string $pageName) {
+            $pageName = 'page--' . $pageName;
+            $contentService = app(ContentService::class);
+
+            return $contentService->findByName($pageName);
+        });
+
+        Latus::macro('posts', function (array $postNames, string $prefix = 'post--') {
+            $postNames = preg_filter('/^/', $prefix, $postNames);
+            $contentService = app(ContentService::class);
+
+            return $contentService->getByNames($postNames);
+        });
+
+        Latus::macro('post', function (string $postName) {
+            $postName = 'post--' . $postName;
+            $contentService = app(ContentService::class);
+
+            return $contentService->findByName($postName);
+        });
     }
 }
