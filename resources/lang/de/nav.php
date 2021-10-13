@@ -40,7 +40,8 @@ return [
     ]
     +
     [
-        'context.view' => 'View',
-        'context.edit' => 'Edit',
-        'context.delete' => 'Delete'
+        'context.view' => 'Ansehen',
+        'context.edit' => 'Bearbeiten',
+        'context.delete' => 'Löschen',
+        'context.more' => 'Mehr',
     ];

@@ -36,7 +36,7 @@
                            href="{{ route('pages.edit', $item->id) }}">{{ __('latus::nav.context.edit') }}</a>
                         <div class="btn-group">
                             <a class="btn btn-link dropdown-toggle text-decoration-none" href="#"
-                               data-bs-toggle="dropdown">More</a>
+                               data-bs-toggle="dropdown">{{ __('latus::nav.context.more') }}</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item btn btn-link"
