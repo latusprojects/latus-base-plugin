@@ -9,7 +9,7 @@ use Latus\Content\Services\ContentService;
 class WebPageRequest extends Request
 {
 
-    public static string $contentType = 'web-page';
+    public static string $pagePrefix = 'page--';
 
     protected ContentService $contentService;
 
@@ -31,7 +31,7 @@ class WebPageRequest extends Request
          */
         $content = $this->getContentService()->find($pageId);
 
-        if (!$content || $content->type !== 'web-page') {
+        if (!$content || !str_starts_with($content->name, self::$pagePrefix)) {
             return null;
         }
 
