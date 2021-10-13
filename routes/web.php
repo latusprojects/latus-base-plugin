@@ -6,12 +6,15 @@ use Latus\BasePlugin\Http\Controllers\DashboardController;
 use Latus\BasePlugin\Http\Controllers\PageController;
 use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
+use Latus\BasePlugin\Modules\Contracts\AdminModule;
+use Latus\BasePlugin\Modules\Contracts\AuthModule;
+use Latus\BasePlugin\Modules\Contracts\WebModule;
 
 /*
  * Module: Web
  * Routes for basic functionality
  */
-Route::middleware(['web'])->group(function () {
+Route::middleware(['web', 'resolve-module:' . WebModule::class])->group(function () {
 
     $webRoutes = function () {
         Route::get('/page/{page_id}', [WebController::class, 'showPage']);
@@ -29,7 +32,7 @@ Route::middleware(['web'])->group(function () {
  * Module: Admin
  * Routes for basic functionality
  */
-Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class])->group(function () {
+Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-module:' . AdminModule::class])->group(function () {
 
     $adminRoutesPrefix = config('latus-routes.admin_routes_prefix');
 
@@ -47,7 +50,7 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class])->group(f
  * Module: Auth
  * Routes for basic functionality
  */
-Route::middleware(['web'])->group(function () {
+Route::middleware(['web', 'resolve-module:' . AuthModule::class])->group(function () {
 
     $authRoutesPrefix = config('latus-routes.auth_routes_prefix');
 
