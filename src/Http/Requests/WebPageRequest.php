@@ -29,7 +29,13 @@ class WebPageRequest extends Request
         /**
          * @var Content $content
          */
-        $content = $this->getContentService()->find($pageId);
+        $content = null;
+
+        if (is_numeric($pageId)) {
+            $content = $this->getContentService()->find($pageId);
+        } else {
+            $content = $this->getContentService()->findByName('page--' . $pageId);
+        }
 
         if (!$content || !str_starts_with($content->name, self::$pagePrefix)) {
             return null;

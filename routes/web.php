@@ -17,8 +17,8 @@ use Latus\BasePlugin\Modules\Contracts\WebModule;
 Route::middleware(['web', 'resolve-module:' . WebModule::class])->group(function () {
 
     $webRoutes = function () {
-        Route::get('/', [WebController::class, 'showPage'])->defaults('page_id', latus()->page('home')->id);
         Route::get('/page/{page_id}', [WebController::class, 'showPage']);
+        Route::get('/', ['uses' => implode('@', [WebController::class, 'showPage']), 'as' => '/page/home'])->defaults('page_id', 'home');
     };
 
     $webRoutesPrefix = config('latus-routes.web_routes_prefix');
