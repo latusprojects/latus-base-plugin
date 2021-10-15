@@ -49,16 +49,11 @@ class PageController extends AdminController
                 'text' => $validatedInput['text'],
             ]);
         } catch (\InvalidArgumentException) {
-            return response()->json([
-                'message' => 'content-service attribute validation failed'
-            ], 400);
+            return response()->latusFailed(status: 400, message: 'content-service attribute validation failed');
         }
 
-        return response()->json([
-            'message' => 'page created',
-            'data' => [
-                'created_at' => $page->getCreatedAtColumn()
-            ]
+        return response()->latusSuccess(message: 'page created', data: [
+            'created_at' => $page->getCreatedAtColumn()
         ]);
     }
 
@@ -74,21 +69,16 @@ class PageController extends AdminController
         $contentService->setTitleOfContent($page, $validatedInput['title']);
         $contentService->setTextOfContent($page, $validatedInput['text']);
 
-        return response()->json([
-            'message' => 'page updated',
-            'data' => [
-                'updated_at' => $page->getUpdatedAtColumn()
-            ]
+        return response()->latusSuccess(message: 'page updated', data: [
+            'updated_at' => $page->updated_at
         ]);
     }
 
-    public function destroy(Page $page, ContentService $contentService)
+    public function destroy(Page $page, ContentService $contentService): JsonResponse
     {
         $contentService->deleteContent($page);
 
-        return response()->json([
-            'message' => 'page deleted'
-        ]);
+        return response()->latusSuccess(message: 'page deleted');
     }
 
     public function show(Page $page): View
