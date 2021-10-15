@@ -21,7 +21,7 @@ class AdminController extends Controller
     {
     }
 
-    protected function returnView(View $viewTarget, string $reference = null): View
+    protected function returnView(\Illuminate\Contracts\View\View $viewTarget, string $reference = null): View
     {
         try {
             /**
