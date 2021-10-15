@@ -2,6 +2,7 @@
 
 namespace Latus\BasePlugin\Providers;
 
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use Latus\BasePlugin\Http\Controllers\AdminController;
 use Latus\BasePlugin\Http\Controllers\AuthController;
@@ -114,6 +115,28 @@ class PluginServiceProvider extends ServiceProvider
             $contentService = app(ContentService::class);
 
             return $contentService->findByName($postName);
+        });
+
+        Response::macro('latusSuccess', function (int $status = 200, string $message = 'action successful', array $data = null) {
+
+            $responsePayload = [
+                'message' => $message
+            ];
+
+            if ($data) {
+                $responsePayload['data'] = $data;
+            }
+
+            return \response()->json($responsePayload, $status);
+        });
+
+        Response::macro('latusFailed', function (int $status, string $message = 'action failed') {
+
+            $responsePayload = [
+                'message' => $message
+            ];
+
+            return \response()->json($responsePayload, $status);
         });
     }
 }
