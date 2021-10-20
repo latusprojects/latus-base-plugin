@@ -10,7 +10,8 @@
   ],
   "require": {
     "latusprojects/latus": "^0.2.0",
-    "latusprojects/latus-plugin-api": "^0.1.0"
+    "latusprojects/latus-plugin-api": "^0.1.0",
+    "latusprojects/laravel-bootstrap-components": "dev-master"
   },
   "autoload": {
     "psr-4": {
