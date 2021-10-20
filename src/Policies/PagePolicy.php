@@ -36,4 +36,10 @@ class PagePolicy
         return ($page->owner_model_class === get_class($user) && $page->owner_model_id === $user->id)
             || ($this->userService->userHasPermissionByString($user, 'content.page.edit') && $this->userService->userHasPermissionByString($user, 'content.page.index'));
     }
+
+    public function delete(User $user, Page $page): bool
+    {
+        return ($page->owner_model_class === get_class($user) && $page->owner_model_id === $user->id)
+            || ($this->userService->userHasPermissionByString($user, 'content.page.destroy') && $this->userService->userHasPermissionByString($user, 'content.page.index'));
+    }
 }
