@@ -130,11 +130,15 @@ class PluginServiceProvider extends ServiceProvider
             return \response()->json($responsePayload, $status);
         });
 
-        Response::macro('latusFailed', function (int $status, string $message = 'action failed') {
+        Response::macro('latusFailed', function (int $status, string $message = 'action failed', array $data = null) {
 
             $responsePayload = [
                 'message' => $message
             ];
+
+            if ($data) {
+                $responsePayload['data'] = $data;
+            }
 
             return \response()->json($responsePayload, $status);
         });
