@@ -2,16 +2,17 @@ const mix = require('laravel-mix');
 
 let outputDir = 'resources/assets/dist';
 
-outputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/latusprojects/latus-base-plugin'
+outputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/latusprojects/latus-base-plugin';
+let larabergOutputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/van-ons/laraberg';
+let bootstrapOutputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/bootstrap/bs5';
 
 mix.setPublicPath(outputDir);
 
-mix.js('resources/assets/js/content-tools.js', 'ContentTools/content-tools.js')
-    .sass('resources/assets/css/content-tools.scss', 'ContentTools/content-tools.css', {
-        // Rewrite CSS urls for app.scss
+mix.js('resources/assets/js/admin.js', 'admin.js')
+    .sass('resources/assets/css/admin.scss', 'admin.css', {
         processUrls: false,
     })
-    .copyDirectory('node_modules/ContentTools/build/images', outputDir + '/ContentTools/images');
+    .copyDirectory('vendor/van-ons/laraberg/public', larabergOutputDir);
 
 if (mix.inProduction()) {
     mix.version();

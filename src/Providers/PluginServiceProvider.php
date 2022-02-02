@@ -2,6 +2,7 @@
 
 namespace Latus\BasePlugin\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 use Latus\BasePlugin\Http\Controllers\AdminController;
@@ -80,11 +81,21 @@ class PluginServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'latus');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views/components', 'latus-comp');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'latus');
 
         $this->createMacros();
 
         $this->app->register(RouteServiceProvider::class);
+
+        Blade::component('latus-comp::viewModal', 'latus.viewModal');
+        Blade::component('latus-comp::multiStepCarousel', 'latus.multiStepCarousel');
+
+        Blade::component('latus-comp::crud.createPage', 'latus.createPage');
+        Blade::component('latus-comp::crud.editPage', 'latus.editPage');
+        Blade::component('latus-comp::crud.indexPage', 'latus.indexPage');
+
     }
 
     protected function createMacros()

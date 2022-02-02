@@ -11,15 +11,12 @@
   },
   "devDependencies": {
     "axios": "^0.21",
-    "ContentTools": "^1.6.13",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
     "postcss": "^8.1.14",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.41.0",
-    "sass-loader": "^12.1.0"
-  },
-  "dependencies": {
-    "ContentEdit": "^1.3.5"
+    "sass-loader": "^12.1.0",
+    "bootstrap": "^5.1.3"
   }
 }

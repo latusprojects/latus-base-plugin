@@ -6,4 +6,9 @@ use Latus\Content\Models\Content;
 
 class Page extends Content
 {
+
+    public function getMorphClass()
+    {
+        return Content::class;
+    }
 }

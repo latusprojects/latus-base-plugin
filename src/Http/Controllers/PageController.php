@@ -45,15 +45,17 @@ class PageController extends AdminController
                 'name' => 'page--' . microtime(),
                 'owner_model_class' => get_class(auth()->user()),
                 'owner_model_id' => auth()->user()->id,
-                'title' => $validatedInput['title'],
-                'text' => $validatedInput['text'],
+                'title' => $validatedInput['title'] ?? '',
+                'text' => (string)$validatedInput['text'] ?? '',
             ]);
+
         } catch (\InvalidArgumentException) {
             return response()->latusFailed(status: 400, message: 'content-service attribute validation failed');
         }
 
         return response()->latusSuccess(message: 'page created', data: [
-            'created_at' => $page->getCreatedAtColumn()
+            'created_at' => $page->getCreatedAtColumn(),
+            'id' => $page->id,
         ]);
     }
 
@@ -66,11 +68,12 @@ class PageController extends AdminController
     {
         $validatedInput = $request->validated();
 
-        $contentService->setTitleOfContent($page, $validatedInput['title']);
-        $contentService->setTextOfContent($page, $validatedInput['text']);
+        $contentService->setTitleOfContent($page, $validatedInput['title'] ?? '');
+        $contentService->setTextOfContent($page, $validatedInput['text'] ?? '');
 
         return response()->latusSuccess(message: 'page updated', data: [
-            'updated_at' => $page->updated_at
+            'updated_at' => $page->updated_at,
+            'id' => $page->id,
         ]);
     }
 

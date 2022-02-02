@@ -1,0 +1,23 @@
+.laraberg__editor {
+  .edit-post-more-menu, .block-editor-post-preview__dropdown {
+    display: none;
+  }
+
+  .wp-block {
+    max-width: 90% !important;
+
+    &[data-align="full"] {
+      max-width: 100% !important;
+      padding-left: 72px;
+    }
+  }
+
+  .popover-slot {
+    z-index: 120;
+    position: relative;
+
+    .components-popover__content {
+      margin-left: -235px !important;
+    }
+  }
+}
