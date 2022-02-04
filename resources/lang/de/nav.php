@@ -12,6 +12,9 @@ return [
         'content.pages' => 'Seiten',
         'content.page.index' => 'Übersicht',
         'content.page.create' => 'Neu',
+        'content.page.create.title' => 'Seite erstellen',
+        'content.page.edit.' => 'Bearbeiten',
+        'content.page.edit.title' => 'Seite bearbeiten',
 
         'content.posts' => 'Posts',
         'content.post.index' => 'Übersicht',

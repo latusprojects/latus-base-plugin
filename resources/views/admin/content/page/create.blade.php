@@ -1,15 +1,41 @@
-<div id="content-head">
-    <div class="content-header mb-2">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin') }}">{{ __('latus::nav.content') }}</a></li>
-                <li class="breadcrumb-item"><a
-                            href="{{ route('pages.index') }}">{{ __('latus::nav.content.pages') }}</a></li>
-                <li class="breadcrumb-item active">{{ __('latus::nav.content.page.create') }}</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-<div id="content-main">
+<script>
+    window.model = 'page';
+    window.action = 'create';
+    window.lb_editor = true;
+    window.exposed = {
+        attributes: {},
+        routes: {
+            'pages.store': '{{ route('pages.store') }}',
+            'pages.index': '{{ route('pages.index') }}',
+        },
+        trans: {
+            'create.success.title': '{{ __('latus::page.create.success.title') }}',
+            'create.success.text': '{{ __('latus::page.create.success.text') }}',
+        }
+    }
+</script>
 
-</div>
+@php($crumbs = [
+    ['url' => route('admin'), 'label' => __('latus::nav.content')],
+    ['url' => route('pages.index'), 'label' => __('latus::nav.content.pages')],
+    ['label' => __('latus::nav.content.page.create')]
+])
+
+<x-latus.createPage :crumbs="$crumbs">
+    <x-slot name="content">
+        <div class="block">
+            <div class="h5 mb-3">{{ __('latus::nav.content.page.create.title') }}</div>
+        </div>
+        <div class="block p-0 ps-1 pe-1 overflow-hidden">
+            <form novalidate class="needs-validation" id="createPageForm">
+                <div class="row">
+                    <div class="col-12 ps-0 pe-0">
+                        <textarea id="textInput" name="textInput" hidden></textarea>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary js-latus-save"
+                       value="{{ __('latus::page.form.save.label') }}">
+            </form>
+        </div>
+    </x-slot>
+</x-latus.createPage>

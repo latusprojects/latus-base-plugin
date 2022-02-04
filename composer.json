@@ -11,7 +11,9 @@
   "require": {
     "latusprojects/latus": "^0.2.0",
     "latusprojects/latus-plugin-api": "^0.1.0",
-    "latusprojects/laravel-bootstrap-components": "dev-master"
+    "latusprojects/laravel-bootstrap-components": "dev-master",
+    "van-ons/laraberg": "dev-master",
+    "unisharp/laravel-filemanager": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -41,6 +43,26 @@
     }
   },
   "repositories": {
+    "plugin-api": {
+      "type": "path",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-plugin-api",
+      "symlink": true
+    },
+    "bootstrap-components": {
+      "type": "path",
+      "url": "/mnt/d/latus-projects/laravel-packages/laravel-bootstrap-components",
+      "symlink": true
+    },
+    "content": {
+      "type": "path",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-content",
+      "symlink": true
+    },
+    "ui-dev": {
+      "type": "path",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-ui",
+      "symlink": true
+    },
     "0": {
       "type": "composer",
       "url": "https://latusprojects.repo.repman.io"

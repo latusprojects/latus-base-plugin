@@ -44,6 +44,14 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
         Route::resource('pages', PageController::class);
 
         Route::get('', [DashboardController::class, 'showOverview'])->name('admin');
+
+        /*
+         * Laravel-FileManager
+         */
+
+        Route::prefix('files')->group(function () {
+            \UniSharp\LaravelFilemanager\Lfm::routes();
+        });
     });
 });
 
