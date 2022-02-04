@@ -45,22 +45,22 @@
   "repositories": {
     "plugin-api": {
       "type": "path",
-      "url": "P:\\latus-projects\\laravel-packages\\latus-plugin-api",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-plugin-api",
       "symlink": true
     },
     "bootstrap-components": {
       "type": "path",
-      "url": "P:\\latus-projects\\laravel-packages\\laravel-bootstrap-components",
+      "url": "/mnt/d/latus-projects/laravel-packages/laravel-bootstrap-components",
       "symlink": true
     },
     "content": {
       "type": "path",
-      "url": "P:\\latus-projects\\laravel-packages\\latus-content",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-content",
       "symlink": true
     },
     "ui-dev": {
       "type": "path",
-      "url": "P:\\latus-projects\\laravel-packages\\latus-ui",
+      "url": "/mnt/d/latus-projects/laravel-packages/latus-ui",
       "symlink": true
     },
     "0": {

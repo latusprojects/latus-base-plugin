@@ -2,9 +2,9 @@ const mix = require('laravel-mix');
 
 let outputDir = 'resources/assets/dist';
 
-outputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/latusprojects/latus-base-plugin';
-let larabergOutputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/van-ons/laraberg';
-let bootstrapOutputDir = './../../../laravel-path/latus-project/latus-project/public/assets/vendor/bootstrap/bs5';
+outputDir = './../../../laravel-path/latus-project/leasing-hoping/public/assets/vendor/latusprojects/latus-base-plugin';
+let larabergOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/van-ons/laraberg';
+let bootstrapOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/bootstrap/bs5';
 
 mix.setPublicPath(outputDir);
 
