@@ -1,5 +1,6 @@
 import {InputComponent} from "./inputComponent";
 import {SelectComponent} from "./selectComponent";
+import {TextareaComponent} from "./textareaComponent";
 
 export class RowComponent {
     _inputs = [];
@@ -111,6 +112,38 @@ export class RowComponent {
                 value: value,
                 disabled: disabled,
                 options: options,
+                dataGroup: dataGroup,
+                dataName: dataName,
+                validatesFor: validatesFor,
+            },
+            onRender
+        ));
+
+        return this;
+    }
+
+    addTextarea({
+                    name,
+                    label = null,
+                    description = null,
+                    classes = ['col-12', 'col-md-4'],
+                    value = null,
+                    disabled = false,
+                    onRender = null,
+                    dataGroup = null,
+                    dataName = null,
+                    validatesFor = null,
+                }) {
+        this._inputs.push(new TextareaComponent(this, {
+                name: name,
+                label: label,
+                description: description,
+                classes: classes,
+                value: value,
+                disabled: disabled,
+                dataGroup: dataGroup,
+                dataName: dataName,
+                validatesFor: validatesFor,
             },
             onRender
         ));
