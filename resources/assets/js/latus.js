@@ -7,25 +7,55 @@ import {Interface} from "./models/interfaces/interface";
 import {ModelService} from "./services/modelService";
 import {ResponseErrorHandler} from "./handlers/responseErrorHandler";
 import {ResponseHandler} from "./handlers/responseHandler";
-import {Builder} from "./extensions/form-builder/builder";
+import {Builder as FormBuilder} from "./extensions/form-builder/builder";
 import {initFileManager} from "./extensions/file-manager/fileManager";
 import {fetchExposedData} from "./utilities/fetchExposedData";
+import {UI} from "./ui/ui";
+import {Builder as TableBuilder} from "./extensions/extendable-table/builder";
 
 const Latus = {
     _currentModel: null,
     _exposedData: {},
+    _ui: null,
 
     CRUD: CRUD,
 
+    ui() {
+
+    },
+
     boot() {
+        this._ui = new UI();
+
         initFileManager();
+
+        new TableBuilder()
+        new FormBuilder();
 
         fetchExposedData().then(data => {
             if (!window.hasOwnProperty('exposed')) {
                 window.exposed = {};
             }
+            for (const [key, value] of Object.entries(data)) {
+                if (window.exposed.hasOwnProperty(key)) {
+                    Object.assign(window.exposed[key], value);
+                    continue;
+                }
 
-            Object.assign(window.exposed, data);
+                window.exposed[key] = value;
+            }
+
+            if (!window.exposed.hasOwnProperty('routes')) {
+                window.exposed.routes = {};
+            }
+
+            let baseRoutes = {
+                'ui.widgets': '/ui/widgets/:widget',
+                'ui.widgets.endpoint': '/ui/widgets/:widget/:endpoint',
+                'fileManager': '/admin/files'
+            }
+
+            Object.assign(window.exposed.routes, baseRoutes);
 
             document.dispatchEvent(new Event('latus.booted'));
         })
@@ -76,7 +106,8 @@ const Latus = {
     },
 
     builders: {
-        form: Builder
+        form: FormBuilder,
+        table: TableBuilder
     }
 }
 
