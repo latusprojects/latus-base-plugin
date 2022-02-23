@@ -9,6 +9,7 @@ use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
  * Module: Web
@@ -50,7 +51,7 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
          */
 
         Route::prefix('files')->group(function () {
-            \UniSharp\LaravelFilemanager\Lfm::routes();
+            Lfm::routes();
         });
     });
 });
