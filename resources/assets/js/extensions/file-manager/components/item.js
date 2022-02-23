@@ -12,7 +12,11 @@ export class Item extends HTMLDivElement {
                 <div class="card-header text-end">
                     <button class="btn btn-link btn-sm js-delete-self" type="button"><i class="bi bi-trash"></i></button>
                 </div>
-                <img class="card-img-top d-none" style="cursor: pointer;" src="" alt="">
+                <div class="position-relative">
+                    <img class="card-img-top d-none" style="cursor: pointer;" src="" alt="">
+                    <i class="bi bi-exclamation-circle icon-invalid text-danger d-none"></i>
+                </div>
+                
                 <div class="card-body"></div>
                 <div class="card-footer small"></div>
             </div>
