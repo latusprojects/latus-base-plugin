@@ -2,7 +2,7 @@ const mix = require('laravel-mix');
 
 let outputDir = 'resources/assets/dist';
 
-outputDir = './../../../laravel-path/latus-project/leasing-hoping/public/assets/vendor/latusprojects/latus-base-plugin';
+outputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/latusprojects/latus-base-plugin';
 let larabergOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/van-ons/laraberg';
 let bootstrapOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/bootstrap/bs5';
 
