@@ -21,3 +21,123 @@
     }
   }
 }
+
+.step-form-wrapper {
+  .meta-menu-wrapper {
+    .card-header {
+      padding: 8px 16px !important;
+    }
+
+    .accordion-item.form-section {
+      border: 0 !important;
+      border-radius: 0 !important;
+
+      .accordion-collapse.show {
+        border-top: 0 !important;
+      }
+
+      .accordion-button.section-label {
+        border: 0 !important;
+        border-radius: 0 !important;
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      position: absolute;
+    }
+  }
+}
+
+.file-item {
+  &.is-invalid {
+    .card {
+      border-color: red;
+    }
+
+    .icon-invalid {
+      position: absolute;
+      display: inline !important;
+      left: calc(50% - 25px);
+      font-size: 50px;
+      top: 10px;
+    }
+  }
+}
+
+
+.latus-dual-range-input {
+  padding-bottom: 20px;
+
+  input[type=range]:first-of-type {
+    left: 12px;
+    border-bottom: 1px solid black;
+  }
+
+  input[type=range]:last-of-type {
+    right: 12px;
+  }
+
+  input[type=range] {
+    width: calc(100% - 24px);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 0;
+    pointer-events: none;
+
+    &::-webkit-slider-runnable-track {
+      cursor: default;
+      height: 1px; /* Required for Samsung internet based browsers */
+      outline: 0;
+      -webkit-appearance: none;
+      // Add custom styles here..
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none; // Reset appearance so we can apply backgrounds/borders etc.
+      pointer-events: auto; // Re-enable pointer events so the handles can be used.
+      z-index: 10000;
+    }
+
+    &::-moz-range-track {
+      cursor: default;
+      -moz-appearance: none;
+      outline: 0;
+      height: 0px;
+      // Add custom styles here..
+    }
+
+    &::-moz-range-thumb {
+      -moz-appearance: none; // Reset appearance so we can apply backgrounds/borders etc.
+      pointer-events: auto; // Re-enable pointer events so the handles can be used.
+      z-index: 10000;
+    }
+  }
+}
+
+.latus-extendable-table {
+  .js-row-extender {
+    top: -1px;
+    left: -14px;
+
+    .js-add-field, .js-remove-field {
+      display: table-row;
+      padding: 1px 4px;
+    }
+  }
+
+  .js-column-extender {
+    top: -14px;
+    left: -1px;
+
+    .js-add-field, .js-remove-field {
+      display: table-row;
+      padding: 1px 4px;
+    }
+  }
+}
