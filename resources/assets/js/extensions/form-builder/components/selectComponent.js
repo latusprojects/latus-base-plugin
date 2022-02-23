@@ -9,8 +9,23 @@ export class SelectComponent {
     _value;
     _disabled;
     _options;
+    _dataGroup;
+    _dataName;
+    _validatesFor;
 
-    constructor(row, {name, label, description, classes, type, value, disabled, options}, onRender = null) {
+    constructor(row, {
+        name,
+        label,
+        description,
+        classes,
+        type,
+        value,
+        disabled,
+        options,
+        dataGroup,
+        dataName,
+        validatesFor,
+    }, onRender = null) {
         this._row = row;
         this._onRender = onRender;
 
@@ -20,6 +35,9 @@ export class SelectComponent {
         this._value = value;
         this._disabled = disabled;
         this._options = options;
+        this._dataGroup = dataGroup;
+        this._dataName = dataName;
+        this._validatesFor = validatesFor;
 
         this._element = document.createElement('div', {is: 'latus-select'});
         this._element.classList.add(...classes);
@@ -46,6 +64,18 @@ export class SelectComponent {
 
         selectElement.id = this._name;
         selectElement.setAttribute('name', this._name);
+
+        if (this._dataGroup !== null) {
+            selectElement.setAttribute('data-latus-group', this._dataGroup);
+        }
+
+        if (this._dataName !== null) {
+            selectElement.setAttribute('data-latus-name', this._dataName);
+        }
+
+        if (this._validatesFor !== null) {
+            selectElement.setAttribute('data-latus-validates-for', this._validatesFor);
+        }
 
         if (this._disabled) {
             selectElement.classList.add('disabled');

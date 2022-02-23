@@ -5,16 +5,18 @@ export class SectionComponent {
     _name;
     _label;
     _isOpen;
+    _validatesUsing;
 
     _rows = [];
 
     _element;
 
-    constructor(step, name, label, isOpen) {
+    constructor(step, name, label, isOpen, validatesUsing) {
         this._step = step;
         this._name = name;
         this._label = label;
         this._isOpen = isOpen;
+        this._validatesUsing = validatesUsing;
 
         this._element = document.createElement('div', {is: 'latus-section'});
         this._element.setAttribute('data-section', name);
@@ -25,11 +27,22 @@ export class SectionComponent {
     }
 
     rendered() {
+        if (this._validatesUsing) {
+            let formattedFieldNames = '';
+
+            this._validatesUsing.forEach(fieldName => {
+                formattedFieldNames += '--' + fieldName;
+            });
+
+            this._element.setAttribute('data-latus-validates-using', formattedFieldNames);
+
+
+        }
+
         if (this._label) {
             let labelElement = this._element.querySelector('.section-label');
             labelElement.innerText = this._label;
         }
-
 
         let accordionCollapse = this._element.querySelector('.accordion-collapse');
         accordionCollapse.id = this._name + 'Collapse';

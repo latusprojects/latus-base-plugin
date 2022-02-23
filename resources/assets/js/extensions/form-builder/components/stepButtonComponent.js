@@ -16,7 +16,6 @@ export class StepButtonComponent {
 
     rendered() {
         if (this._stepIndex === 0) {
-            console.log(this._stepIndex);
             this._element.querySelector('.nav-link').classList.add('active');
         }
 

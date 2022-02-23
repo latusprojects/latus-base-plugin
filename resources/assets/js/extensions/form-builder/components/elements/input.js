@@ -24,7 +24,7 @@ export class Input extends HTMLDivElement {
             let wrapper = document.createElement('div');
             wrapper.classList.add('form-check')
             inputElement.classList.add('form-check-input');
-            labelElement.classList.add('form-check-label')
+            labelElement.classList.add('form-check-label');
             wrapper.append(inputElement, labelElement, descriptionElement);
             this.append(wrapper);
         } else {

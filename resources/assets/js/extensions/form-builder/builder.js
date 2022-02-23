@@ -6,6 +6,10 @@ import {StepFormComponent} from "./components/stepFormComponent";
 import {Row} from "./components/elements/row";
 import {Input} from "./components/elements/input";
 import {Select} from "./components/elements/select";
+import {MetaMenu} from "./components/elements/metaMenu";
+import {Textarea} from "./components/elements/textarea";
+import {Button} from "./components/elements/button";
+import {InputGroup} from "./components/elements/inputGroup";
 
 export class Builder {
 
@@ -23,7 +27,11 @@ export class Builder {
             window.customElements.define('latus-section', Section, {extends: 'div'});
             window.customElements.define('latus-row', Row, {extends: 'div'});
             window.customElements.define('latus-input', Input, {extends: 'div'});
+            window.customElements.define('latus-input-group', InputGroup, {extends: 'div'});
             window.customElements.define('latus-select', Select, {extends: 'div'});
+            window.customElements.define('latus-meta-menu', MetaMenu, {extends: 'div'});
+            window.customElements.define('latus-textarea', Textarea, {extends: 'div'});
+            window.customElements.define('latus-button', Button, {extends: 'button'});
             Builder.components_defined = true;
         }
     }
@@ -36,7 +44,11 @@ export class Builder {
             customElements.whenDefined('latus-section'),
             customElements.whenDefined('latus-row'),
             customElements.whenDefined('latus-input'),
+            customElements.whenDefined('latus-input-group'),
             customElements.whenDefined('latus-select'),
+            customElements.whenDefined('latus-meta-menu'),
+            customElements.whenDefined('latus-textarea'),
+            customElements.whenDefined('latus-button'),
         ]);
     }
 
