@@ -28,6 +28,12 @@
         </div>
         <div class="block p-0 ps-1 pe-1 overflow-hidden">
             <form novalidate class="needs-validation" id="createPageForm">
+                <div class="row p-3">
+                    <div class="col-12">
+                        <label for="titleInput">Title</label>
+                        <input type="text" class="form-control" id="titleInput" name="titleInput">
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 ps-0 pe-0">
                         <textarea id="textInput" name="textInput" hidden></textarea>
