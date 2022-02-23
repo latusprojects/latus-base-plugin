@@ -49,8 +49,8 @@ class PageController extends AdminController
                 'text' => (string)$validatedInput['text'] ?? '',
             ]);
 
-        } catch (\InvalidArgumentException) {
-            return response()->latusFailed(status: 400, message: 'content-service attribute validation failed');
+        } catch (\InvalidArgumentException $exception) {
+            return response()->latusFailed(status: 422, message: 'content-service attribute validation failed');
         }
 
         return response()->latusSuccess(message: 'page created', data: [
