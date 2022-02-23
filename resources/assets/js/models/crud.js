@@ -32,15 +32,13 @@ class CRUD {
     }
 
     static #createSaveListeners() {
-        let saveButtons = document.getElementsByClassName('js-latus-save');
-
-        Array.from(saveButtons).forEach(button => {
-            button.addEventListener('click', function (event) {
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('js-latus-save')) {
                 event.preventDefault();
 
                 document.dispatchEvent(new Event('latus.saving-model'));
                 CRUD._clearValidation();
-            })
+            }
         });
     }
 
