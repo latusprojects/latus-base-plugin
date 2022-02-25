@@ -1,5 +1,6 @@
 import {InputComponent} from "./inputComponent";
 import {SelectComponent} from "./selectComponent";
+import {TextareaComponent} from "./textareaComponent";
 
 export class RowComponent {
     _inputs = [];
@@ -11,8 +12,6 @@ export class RowComponent {
     _label;
 
     constructor(section, {id, label}) {
-
-        console.log(section);
         this._id = id;
         this._label = label;
 
@@ -77,6 +76,11 @@ export class RowComponent {
                  value = null,
                  disabled = false,
                  onRender = null,
+                 dataGroup = null,
+                 dataName = null,
+                 validatesFor = null,
+                 badge = null,
+                 attributes = null,
              }) {
         this._inputs.push(new InputComponent(this, {
                 name: name,
@@ -86,6 +90,11 @@ export class RowComponent {
                 type: type,
                 value: value,
                 disabled: disabled,
+                dataGroup: dataGroup,
+                dataName: dataName,
+                validatesFor: validatesFor,
+                badge: badge,
+                attributes: attributes,
             },
             onRender
         ));
@@ -101,7 +110,10 @@ export class RowComponent {
                   value = null,
                   disabled = false,
                   onRender = null,
-                  options = null
+                  options = null,
+                  dataGroup = null,
+                  dataName = null,
+                  validatesFor = null,
               }) {
         this._inputs.push(new SelectComponent(this, {
                 name: name,
@@ -111,11 +123,44 @@ export class RowComponent {
                 value: value,
                 disabled: disabled,
                 options: options,
+                dataGroup: dataGroup,
+                dataName: dataName,
+                validatesFor: validatesFor,
             },
             onRender
         ));
 
         return this;
+    }
+
+    addTextarea({
+                    name,
+                    label = null,
+                    description = null,
+                    classes = ['col-12', 'col-md-4'],
+                    value = null,
+                    disabled = false,
+                    onRender = null,
+                    dataGroup = null,
+                    dataName = null,
+                    validatesFor = null,
+                }) {
+        this._inputs.push(new TextareaComponent(this, {
+                name: name,
+                label: label,
+                description: description,
+                classes: classes,
+                value: value,
+                disabled: disabled,
+                dataGroup: dataGroup,
+                dataName: dataName,
+                validatesFor: validatesFor,
+            },
+            onRender
+        ));
+
+        return this;
+
     }
 
     finish(targetId) {

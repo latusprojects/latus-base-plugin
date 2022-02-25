@@ -6,14 +6,15 @@ import {Page} from "./models/page";
 import {init} from "./gutenberg/init";
 import {PageController} from "./controllers/pageController";
 import Latus from "./latus";
-import {UploadButton} from "./extensions/file-manager/components/uploadButton";
+import {DualRangeInput} from "./components/dualRangeInput";
 
 window.latus = Latus;
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    exposeRoutes();
     window.latus.fetchExposedData();
+
+    defineElements();
+
     window.latus.boot();
 })
 
@@ -21,16 +22,10 @@ if (!window.hasOwnProperty('bs5')) {
     window.bs5 = require('bootstrap/dist/js/bootstrap.min');
 }
 
-function exposeRoutes() {
-    Object.assign(window.exposed.routes, {
-        'ui.widgets': '/ui/widgets/:widget',
-        'ui.widgets.endpoint': '/ui/widgets/:widget/:endpoint',
-        'fileManager': '/admin/files'
-    });
-}
-
 function defineElements() {
-    window.customElements.define('latus::upload-button', UploadButton, {extends: 'button'});
+
+    //window.customElements.define('latus::upload-button', UploadButton, {extends: 'button'});
+    window.customElements.define('latus-dual-range-input', DualRangeInput, {extends: 'div'});
 }
 
 function registerCrud() {

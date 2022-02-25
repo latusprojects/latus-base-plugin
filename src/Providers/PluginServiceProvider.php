@@ -15,6 +15,7 @@ use Latus\Content\Services\ContentService;
 use Latus\Installer\Providers\Traits\RegistersSeeders;
 use Latus\Laravel\Http\Middleware\BuildPackageDependencies;
 use Latus\BasePlugin\Events\AdminNavDefined;
+use Latus\Permalink\Services\GeneratedPermalinkService;
 use Latus\PluginAPI\Latus;
 use Latus\UI\Providers\Traits\DefinesModules;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
@@ -57,6 +58,15 @@ class PluginServiceProvider extends ServiceProvider
             app()->singleton(AdminNav::class, AdminNav::class);
 
             AdminNavDefined::dispatch(app(AdminNav::class));
+
+            if (!file_exists(base_path('bootstrap/cache/permalinks.php'))) {
+                /**
+                 * @var GeneratedPermalinkService $generatedPermalinkService
+                 */
+                $generatedPermalinkService = $this->app->make(GeneratedPermalinkService::class);
+
+                $generatedPermalinkService->generatePermalinks();
+            }
         });
 
         $this->mergeConfigFrom(__DIR__ . '/../../config/routes.php', 'latus-routes');

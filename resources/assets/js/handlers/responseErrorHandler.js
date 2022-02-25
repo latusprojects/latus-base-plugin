@@ -74,10 +74,24 @@ export class ResponseErrorHandler {
 
         Object.entries(errors).forEach(([field, messages]) => {
             let validationElements = document.querySelectorAll('[data-latus-validates-for="' + field + '"]');
+
+            let wrapperValidationElements = document.querySelectorAll('[data-latus-validates-using*="--' + field + '"]');
+
+            wrapperValidationElements.forEach(function (element) {
+                element.classList.remove('is-valid');
+                element.classList.add('is-invalid');
+            })
+
             validationElements.forEach(function (element) {
                 element.classList.remove('is-valid');
                 element.classList.add('is-invalid');
             });
+
+            let validElements = document.querySelectorAll('[data-latus-validates-for]:not(.is-invalid), [data-latus-validates-using]:not(.is-invalid)');
+
+            validElements.forEach(element => {
+                element.classList.add('is-valid');
+            })
         })
 
         document.dispatchEvent(new Event('latus.failed-arguments'));

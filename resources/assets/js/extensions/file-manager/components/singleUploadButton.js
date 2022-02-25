@@ -30,8 +30,8 @@ export class SingleUploadButton extends HTMLButtonElement {
             for (let item of items) {
                 let itemElement = document.createElement('div', {is: 'latus-upload-item'});
 
-                itemElement.setAttribute('data-path', item.thumb_url);
-                itemElement.setAttribute('data-type', type);
+                itemElement.setAttribute('data-path-thumb', item.thumb_url);
+                itemElement.setAttribute('data-path', item.url);
 
                 containerElement.innerHTML = '';
                 containerElement.appendChild(itemElement);

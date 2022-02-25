@@ -54,7 +54,15 @@ export class ModelService {
 
         let route = this._route('index', parameters);
 
-        return await axios.get(route, {params: {with: withRelationships}});
+        let finalParameters = {
+            with: withRelationships
+        };
+
+        if(parameters !== null){
+            Object.assign(finalParameters, parameters)
+        }
+
+        return await axios.get(route, {params: finalParameters});
     }
 
     async store(attributes, parameters = null) {
