@@ -6,10 +6,10 @@ if (process.env.hasOwnProperty('npm_config_output')) {
     outputDir = process.env.npm_config_output;
 }
 
-vendorOutputDir = outputDir + '/vendor/latusprojects/latus-base-plugin';
+let vendorOutputDir = outputDir + '/vendor/latusprojects/latus-base-plugin';
 let larabergOutputDir = outputDir + '/vendor/van-ons/laraberg';
 
-mix.setPublicPath(outputDir);
+mix.setPublicPath(vendorOutputDir);
 
 mix.js('resources/assets/js/admin.js', 'admin.js')
     .sass('resources/assets/css/admin.scss', 'admin.css', {
