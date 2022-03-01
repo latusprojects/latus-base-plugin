@@ -44,6 +44,7 @@ return [
     +
     [
         'context.view' => 'View',
+        'context.details' => 'Details',
         'context.edit' => 'Edit',
         'context.delete' => 'Delete',
         'context.more' => 'More',
