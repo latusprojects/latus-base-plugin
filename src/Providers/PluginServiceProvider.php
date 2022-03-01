@@ -95,6 +95,10 @@ class PluginServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'latus');
 
+        $this->publishes([
+            __DIR__ . '/../../resources/assets/dist' => public_path('assets')
+        ], 'latus-plugin-assets');
+
         $this->createMacros();
 
         $this->app->register(RouteServiceProvider::class);
