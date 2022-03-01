@@ -2,11 +2,14 @@ const mix = require('laravel-mix');
 
 let outputDir = 'resources/assets/dist';
 
-outputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/latusprojects/latus-base-plugin';
-let larabergOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/van-ons/laraberg';
-let bootstrapOutputDir = './../../../laravel-path/leasing-hoping/latus-project/public/assets/vendor/bootstrap/bs5';
+if (process.env.hasOwnProperty('npm_config_output')) {
+    outputDir = process.env.npm_config_output;
+}
 
-mix.setPublicPath(outputDir);
+let vendorOutputDir = outputDir + '/vendor/latusprojects/latus-base-plugin';
+let larabergOutputDir = outputDir + '/vendor/van-ons/laraberg';
+
+mix.setPublicPath(vendorOutputDir);
 
 mix.js('resources/assets/js/admin.js', 'admin.js')
     .sass('resources/assets/css/admin.scss', 'admin.css', {
