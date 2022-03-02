@@ -4,7 +4,9 @@ namespace Latus\BasePlugin\Http\Controllers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Latus\BasePlugin\Http\Requests\AuthenticateUserRequest;
 use Latus\BasePlugin\Http\Requests\StoreUserRequest;
@@ -150,5 +152,20 @@ class AuthController extends Controller
             ]
         ]);
 
+    }
+
+    /**
+     * Flushes the current session and logs out user
+     *
+     * @Route("/auth/logout", methods={"GET"})
+     * @return RedirectResponse
+     */
+    public function logout()
+    {
+        Session::flush();
+
+        Auth::logout();
+
+        return redirect('auth/login');
     }
 }

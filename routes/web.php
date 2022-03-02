@@ -68,6 +68,7 @@ Route::middleware(['web', 'resolve-module:' . AuthModule::class])->group(functio
         Route::get('/login', [AuthController::class, 'showLogin'])->name('auth/login');
         Route::post('/submit', [AuthController::class, 'authenticate'])->name('auth/submit');
         Route::get('/register', [AuthController::class, 'showRegister'])->name('auth/register');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('auth/logout');
         Route::get('/multiFactorLogin', [AuthController::class, 'showMultiFactorLogin'])->name('auth/factor-login');
     });
 });
