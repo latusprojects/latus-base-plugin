@@ -37,35 +37,6 @@
         ],
         "uninstall": []
       }
-    },
-    "branch-alias": {
-      "dev-develop": "0.1.x-dev"
-    }
-  },
-  "repositories": {
-    "plugin-api": {
-      "type": "path",
-      "url": "D://latus-projects/laravel-packages/latus-plugin-api",
-      "symlink": true
-    },
-    "bootstrap-components": {
-      "type": "path",
-      "url": "D://latus-projects/laravel-packages/laravel-bootstrap-components",
-      "symlink": true
-    },
-    "content": {
-      "type": "path",
-      "url": "D://latus-projects/laravel-packages/latus-content",
-      "symlink": true
-    },
-    "ui-dev": {
-      "type": "path",
-      "url": "D://latus-projects/laravel-packages/latus-ui",
-      "symlink": true
-    },
-    "0": {
-      "type": "composer",
-      "url": "https://latusprojects.repo.repman.io"
     }
   },
   "minimum-stability": "dev"
