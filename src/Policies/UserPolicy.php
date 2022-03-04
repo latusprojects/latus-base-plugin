@@ -21,7 +21,8 @@ class UserPolicy
     public function view(User $user, User $targetUser): bool
     {
         return $this->getUserService()->userHasPermissionByString($user, 'user.show') &&
-            $user->primaryRole()->level >= $targetUser->primaryRole()->level;
+            ($user->is($targetUser) ||
+                ($user->primaryRole()->level >= $targetUser->primaryRole()->level));
     }
 
     public function create(User $user): bool
