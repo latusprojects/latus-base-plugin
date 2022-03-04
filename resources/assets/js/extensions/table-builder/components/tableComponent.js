@@ -121,6 +121,10 @@ export class TableComponent {
                 cellElement = document.createElement('td');
             }
 
+            if (column.getCellClasses() !== null) {
+                cellElement.classList.add(...column.getCellClasses());
+            }
+
             if (item.hasOwnProperty(name)) {
                 cellElement.innerHTML = item[name];
             }
@@ -166,12 +170,12 @@ export class TableComponent {
 
     }
 
-    addColumn({name, label, clearWidth = false}) {
-
+    addColumn({name, label, clearWidth = false, cellClasses = null}) {
         this._columns[name] = new ColumnComponent({
             name: name,
             label: label,
             clearWidth: clearWidth,
+            cellClasses: cellClasses,
         });
 
         return this;

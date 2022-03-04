@@ -21,7 +21,8 @@ export class FilterableTable extends HTMLDivElement {
             table.addColumn({
                 name: name,
                 label: column.label,
-                clearWidth: column.clearWidth
+                clearWidth: column.clearWidth,
+                cellClasses: column.cellClasses,
             });
         }
 
@@ -63,9 +64,12 @@ export class FilterableTable extends HTMLDivElement {
 
 
         columnElements.forEach(function (element) {
+            let cellClasses = element.getAttribute('data-latus-class') ? element.getAttribute('data-latus-class').split(' ') : null;
+
             columns[element.value] = {
                 label: element.innerHTML,
                 clearWidth: element.getAttribute('data-latus-clearwidth') ?? false,
+                cellClasses: cellClasses
             }
         });
 
