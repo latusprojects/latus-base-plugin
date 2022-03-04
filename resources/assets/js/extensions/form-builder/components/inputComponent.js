@@ -44,11 +44,20 @@ export class InputComponent {
         this._badge = badge;
         this._attributes = attributes;
 
+        let customElement = 'input';
+
+        if (this._attributes && this._attributes.hasOwnProperty('is')) {
+            customElement = this._attributes.is;
+            delete this._attributes.is;
+        }
+
         if (badge !== null) {
             this._element = document.createElement('div', {is: 'latus-input-group'});
         } else {
             this._element = document.createElement('div', {is: 'latus-input'});
         }
+
+        this._element.setAttribute('data-latus-is', customElement);
 
         this._element.classList.add(...classes);
 

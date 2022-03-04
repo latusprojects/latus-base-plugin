@@ -12,6 +12,7 @@ import {initFileManager} from "./extensions/file-manager/fileManager";
 import {fetchExposedData} from "./utilities/fetchExposedData";
 import {UI} from "./ui/ui";
 import {Builder as TableBuilder} from "./extensions/extendable-table/builder";
+import {Builder as DataTableBuilder} from "./extensions/table-builder/builder";
 
 const Latus = {
     _currentModel: null,
@@ -107,8 +108,11 @@ const Latus = {
 
     builders: {
         form: FormBuilder,
-        table: TableBuilder
-    }
+        table: TableBuilder,
+        dataTable: DataTableBuilder,
+    },
+
+    fillers: {}
 }
 
 export default Latus;
