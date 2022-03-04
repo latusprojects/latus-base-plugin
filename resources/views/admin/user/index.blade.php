@@ -43,7 +43,9 @@
         <data value="checkbox" data-latus-clearwidth="true"></data>
         <data value="id" data-latus-clearwidth="true">#</data>
         <data value="email">E-Mail Adresse</data>
-        <data value="actions">Aktionen</data>
+        <data value="roles" data-latus-clearwidth="true">Rollen</data>
+        <data value="actions" data-latus-clearwidth="true" data-latus-class="align-text-end p-0 js-actions">Aktionen
+        </data>
     </div>
     <div id="tableWrapper">
 

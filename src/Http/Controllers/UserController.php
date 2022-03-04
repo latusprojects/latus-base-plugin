@@ -33,6 +33,7 @@ class UserController extends AdminController
                 $targetUser->can_be_updated = Gate::allows('update', $targetUser);
                 $targetUser->can_be_deleted = Gate::allows('delete', $targetUser);
                 $targetUser->can_be_viewed = Gate::allows('view', $targetUser);
+                $targetUser->roles = $targetUser->roles()->pluck('name')->implode(',');
 
                 return $targetUser;
             }
