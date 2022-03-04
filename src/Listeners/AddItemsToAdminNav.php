@@ -154,7 +154,7 @@ class AddItemsToAdminNav
             ->requireAuthorization('role.create')
             /* user/index */
             ->parent()->subItem('user.index')
-            ->setUrl('')
+            ->setUrl(route('users.index'))
             ->setIcon('card-list')
             ->requireAuthorization('user.index')
             /* user/create */

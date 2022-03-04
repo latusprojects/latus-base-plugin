@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Latus\BasePlugin\Http\Controllers\AuthController;
 use Latus\BasePlugin\Http\Controllers\DashboardController;
 use Latus\BasePlugin\Http\Controllers\PageController;
+use Latus\BasePlugin\Http\Controllers\UserController;
 use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
+use Latus\BasePlugin\Services\UserService;
 use UniSharp\LaravelFilemanager\Lfm;
 
 /*
@@ -44,12 +46,13 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
 
         Route::resource('pages', PageController::class);
 
+        Route::resource('users', UserController::class)->parameter('user', 'targetUser');
+
         Route::get('', [DashboardController::class, 'showOverview'])->name('admin');
 
         /*
          * Laravel-FileManager
          */
-
         Route::prefix('files')->group(function () {
             Lfm::routes();
         });
