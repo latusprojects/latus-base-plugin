@@ -1,6 +1,7 @@
 import {InputComponent} from "./inputComponent";
 import {SelectComponent} from "./selectComponent";
 import {TextareaComponent} from "./textareaComponent";
+import {CustomComponent} from "./customComponent";
 
 export class RowComponent {
     _inputs = [];
@@ -98,6 +99,34 @@ export class RowComponent {
             },
             onRender
         ));
+
+        return this;
+    }
+
+    addCustom({
+                  name,
+                  elementName,
+                  label = null,
+                  classes = null,
+                  dataGroup = null,
+                  dataName = null,
+                  validatesFor = null,
+                  attributes = null,
+                  tagName = null,
+                  append = null,
+              }) {
+        this._inputs.push(new CustomComponent(this, {
+            name,
+            elementName,
+            label,
+            classes,
+            dataGroup,
+            dataName,
+            validatesFor,
+            attributes,
+            tagName,
+            append,
+        }));
 
         return this;
     }
