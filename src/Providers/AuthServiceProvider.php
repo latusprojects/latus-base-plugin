@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         Dashboard::class => DashboardPolicy::class,
         Page::class => PagePolicy::class,
         User::class => UserPolicy::class,
+        Role::class => RolePolicy::class,
     ];
 
     /**

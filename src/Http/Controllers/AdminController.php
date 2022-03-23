@@ -12,7 +12,7 @@ use Latus\UI\Services\ComponentService;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AdminController extends Controller
+abstract class AdminController extends Controller
 {
     public function __construct(
         protected ComponentService $componentService,

@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Latus\BasePlugin\Http\Controllers\AuthController;
 use Latus\BasePlugin\Http\Controllers\DashboardController;
 use Latus\BasePlugin\Http\Controllers\PageController;
+use Latus\BasePlugin\Http\Controllers\RoleController;
 use Latus\BasePlugin\Http\Controllers\UserController;
 use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
-use Latus\BasePlugin\Services\UserService;
 use UniSharp\LaravelFilemanager\Lfm;
 
 /*
@@ -46,7 +46,11 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
 
         Route::resource('pages', PageController::class);
 
-        Route::resource('users', UserController::class)->parameter('user', 'targetUser');
+        Route::get('users/addableRoles/{targetUser?}', [UserController::class, 'addableRoles'])->name('users.addableRoles');
+        Route::resource('users', UserController::class)->parameters(['users' => 'targetUser']);
+
+        Route::get('roles/addableChildren/{role?}', [RoleController::class, 'addableChildren'])->name('roles.addableChildren');
+        Route::resource('roles', RoleController::class);
 
         Route::get('', [DashboardController::class, 'showOverview'])->name('admin');
 
