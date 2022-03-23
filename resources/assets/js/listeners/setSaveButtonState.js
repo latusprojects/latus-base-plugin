@@ -3,6 +3,7 @@ export class SetSaveButtonState {
 
         switch (event.type) {
             case 'latus.saving-model':
+            case 'latus.stored-model':
                 this.#setButtonState(false);
                 break;
             case 'latus.failed-arguments':
