@@ -3,6 +3,10 @@ export class InputGroup extends HTMLDivElement {
         super();
     }
 
+    _getCustomElementName() {
+        return this.getAttribute('data-latus-is');
+    }
+
     connectedCallback() {
         let labelElement = document.createElement('label');
         labelElement.setAttribute('for', '');
@@ -13,8 +17,8 @@ export class InputGroup extends HTMLDivElement {
         let groupElement = document.createElement('div');
 
         groupElement.classList.add('input-group');
-
-        let inputElement = document.createElement('input');
+        
+        let inputElement = document.createElement('input', {is: this._getCustomElementName()});
         inputElement.setAttribute('id', '');
         inputElement.setAttribute('name', '');
         inputElement.setAttribute('value', '');
@@ -23,7 +27,7 @@ export class InputGroup extends HTMLDivElement {
         let descriptionElement = document.createElement('div');
         descriptionElement.setAttribute('id', '');
         descriptionElement.classList.add('form-text', 'd-none');
-        
+
         inputElement.classList.add('form-control');
         labelElement.classList.add('form-label');
 

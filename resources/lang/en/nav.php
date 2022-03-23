@@ -33,8 +33,17 @@ return [
         'admin.rolesAndUsers' => 'Roles & Users',
         'role.index' => 'Overview: Role',
         'role.create' => 'Create: Role',
+        'role.create.title' => 'Create a new role',
+        'role.edit' => 'Edit: Role',
+        'role.edit.title' => 'Edit Role',
+        'roles' => 'Roles',
+
+        'users' => 'Users',
         'user.index' => 'Overview: User',
         'user.create' => 'Create: User',
+        'user.create.title' => 'Create a new user',
+        'user.edit' => 'Edit: User',
+        'user.edit.title' => 'Edit User',
 
         'admin.settingsAndPackages' => 'Configuration, Themes & Plugins',
         'plugin.index' => 'Plugins',
@@ -44,6 +53,7 @@ return [
     +
     [
         'context.view' => 'View',
+        'context.details' => 'Details',
         'context.edit' => 'Edit',
         'context.delete' => 'Delete',
         'context.more' => 'More',

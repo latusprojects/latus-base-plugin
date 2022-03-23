@@ -24,7 +24,12 @@ export class ResponseErrorHandler {
         }
 
         if (status === 423) {
-            this.#handleLockedResourceError(response);
+            if (response?.data?.data?.gated_by !== null) {
+                this.#handleLockedResourceError(response);
+                return;
+            }
+
+            this.#handleLockedError(response);
             return;
         }
 
@@ -69,6 +74,35 @@ export class ResponseErrorHandler {
         toast.push(10000);
     }
 
+    #handleLockedError(response) {
+        document.dispatchEvent(new Event('latus.model-locked'));
+    }
+
+    #handleLockedResourceError(response) {
+        let gatedBy = response.data.data.gated_by;
+        let type = gatedBy.type;
+
+        let toastTitle, toastText;
+
+
+        if (type === 'relations') {
+            let relationsHtml = "";
+
+            gatedBy.relations.forEach(relation => {
+                relationsHtml += "[<a href='" + relation.search_url + "'>" + relation.label + "</a>] "
+            });
+
+            toastTitle = trans('delete.failed.gated.relations.title');
+            toastText = trans('delete.failed.gated.relations.text', {relations: relationsHtml});
+        }
+
+        let toast = new Toast(toastText, toastTitle, 'info-circle-fill', 'rgb(220, 53, 69)');
+
+        toast.push(10000);
+
+        document.dispatchEvent(new Event('latus.failed-locked'));
+    }
+
     #handleInvalidArgumentsError(response) {
         let errors = response.data.errors;
 
@@ -95,31 +129,6 @@ export class ResponseErrorHandler {
         })
 
         document.dispatchEvent(new Event('latus.failed-arguments'));
-    }
-
-    #handleLockedResourceError(response) {
-        let gatedBy = response.data.data.gated_by;
-        let type = gatedBy.type;
-
-        let toastTitle, toastText;
-
-
-        if (type === 'relations') {
-            let relationsHtml = "";
-
-            gatedBy.relations.forEach(relation => {
-                relationsHtml += "[<a href='" + relation.search_url + "'>" + relation.label + "</a>] "
-            });
-
-            toastTitle = trans('delete.failed.gated.relations.title');
-            toastText = trans('delete.failed.gated.relations.text', {relations: relationsHtml});
-        }
-
-        let toast = new Toast(toastText, toastTitle, 'info-circle-fill', 'rgb(220, 53, 69)');
-
-        toast.push(10000);
-
-        document.dispatchEvent(new Event('latus.failed-locked'));
     }
 
     #handleAfterResponseErrors(error) {

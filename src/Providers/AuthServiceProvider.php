@@ -8,6 +8,9 @@ use Latus\BasePlugin\Contracts\Dashboard;
 use Latus\BasePlugin\Models\Page;
 use Latus\BasePlugin\Policies\DashboardPolicy;
 use Latus\BasePlugin\Policies\PagePolicy;
+use Latus\BasePlugin\Policies\RolePolicy;
+use Latus\BasePlugin\Policies\UserPolicy;
+use Latus\Permissions\Models\Role;
 use Latus\Permissions\Models\User;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Dashboard::class => DashboardPolicy::class,
         Page::class => PagePolicy::class,
+        User::class => UserPolicy::class,
+        Role::class => RolePolicy::class,
     ];
 
     /**

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Latus\BasePlugin\Http\Controllers\AuthController;
 use Latus\BasePlugin\Http\Controllers\DashboardController;
 use Latus\BasePlugin\Http\Controllers\PageController;
+use Latus\BasePlugin\Http\Controllers\RoleController;
+use Latus\BasePlugin\Http\Controllers\UserController;
 use Latus\BasePlugin\Http\Controllers\WebController;
 use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
@@ -44,12 +46,17 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
 
         Route::resource('pages', PageController::class);
 
+        Route::get('users/addableRoles/{targetUser?}', [UserController::class, 'addableRoles'])->name('users.addableRoles');
+        Route::resource('users', UserController::class)->parameters(['users' => 'targetUser']);
+
+        Route::get('roles/addableChildren/{role?}', [RoleController::class, 'addableChildren'])->name('roles.addableChildren');
+        Route::resource('roles', RoleController::class);
+
         Route::get('', [DashboardController::class, 'showOverview'])->name('admin');
 
         /*
          * Laravel-FileManager
          */
-
         Route::prefix('files')->group(function () {
             Lfm::routes();
         });
@@ -68,6 +75,7 @@ Route::middleware(['web', 'resolve-module:' . AuthModule::class])->group(functio
         Route::get('/login', [AuthController::class, 'showLogin'])->name('auth/login');
         Route::post('/submit', [AuthController::class, 'authenticate'])->name('auth/submit');
         Route::get('/register', [AuthController::class, 'showRegister'])->name('auth/register');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('auth/logout');
         Route::get('/multiFactorLogin', [AuthController::class, 'showMultiFactorLogin'])->name('auth/factor-login');
     });
 });

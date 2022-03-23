@@ -35,6 +35,16 @@
                                value="{{ $page->title }}">
                     </div>
                 </div>
+                <div class="row p-3">
+                    <div class="col-12">
+                        <label for="permalinkInput">Permalink</label>
+                        <div class="input-group">
+                            <span class="input-group-text">{{ config('app.url') }}/</span>
+                            <input type="text" class="form-control" id="permalinkInput" name="permalinkInput"
+                                   value="{{ $permalink ? $permalink->url : '' }}">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 ps-0 pe-0">
                         <textarea id="textInput" name="textInput" hidden>{{ $page->getRawContent() }}</textarea>

@@ -144,22 +144,22 @@ class AddItemsToAdminNav
             ->requireAuthorization(['user.index', 'role.index'])
             /* role/index */
             ->subItem('role.index')
-            ->setUrl('')
+            ->setUrl(route('roles.index'))
             ->setIcon('card-list')
             ->requireAuthorization('role.index')
             /* role/create */
             ->parent()->subItem('role.create')
-            ->setUrl('')
+            ->setUrl(route('roles.create'))
             ->setIcon('plus-circle')
             ->requireAuthorization('role.create')
             /* user/index */
             ->parent()->subItem('user.index')
-            ->setUrl('')
+            ->setUrl(route('users.index'))
             ->setIcon('card-list')
             ->requireAuthorization('user.index')
             /* user/create */
             ->parent()->subItem('user.create')
-            ->setUrl('')
+            ->setUrl(route('users.create'))
             ->setIcon('plus-circle')
             ->requireAuthorization('user.create');
 

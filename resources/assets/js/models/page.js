@@ -3,8 +3,9 @@ import {Model} from "./model";
 export class Page extends Model {
     gatherAttributes() {
         return {
-            text: document.getElementById('textInput').value,
+            text: Laraberg.getContent(),
             title: document.getElementById('titleInput').value,
+            permalink: document.getElementById('permalinkInput').value,
         };
     }
 

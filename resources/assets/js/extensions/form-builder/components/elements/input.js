@@ -3,6 +3,10 @@ export class Input extends HTMLDivElement {
         super();
     }
 
+    _getCustomElementName() {
+        return this.getAttribute('data-latus-is');
+    }
+
     connectedCallback() {
         let labelElement = document.createElement('label');
         labelElement.setAttribute('for', '');
@@ -10,7 +14,7 @@ export class Input extends HTMLDivElement {
 
         let type = this.getAttribute('data-type');
 
-        let inputElement = document.createElement('input');
+        let inputElement = document.createElement('input', {is: this._getCustomElementName()});
         inputElement.setAttribute('id', '');
         inputElement.setAttribute('name', '');
         inputElement.setAttribute('value', '');

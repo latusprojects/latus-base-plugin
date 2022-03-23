@@ -33,18 +33,18 @@ export class StepFormComponent {
             step.rendered();
         }
 
-        if (this._formFillers) {
-            for (let [selector, callback] of Object.entries(this._formFillers)) {
-                callback(this, this._element.querySelectorAll(selector));
-            }
-        }
-
         if (this.getConfig('metaMenu') === true) {
             this.__renderMetaMenu();
         }
 
         if (this.getConfig('saveButtons') === true) {
             this.__renderSaveButtons();
+        }
+
+        if (this._formFillers) {
+            for (let [selector, callback] of Object.entries(this._formFillers)) {
+                callback(this, this._element.querySelectorAll(selector));
+            }
         }
     }
 

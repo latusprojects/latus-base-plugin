@@ -7,6 +7,15 @@ import {init} from "./gutenberg/init";
 import {PageController} from "./controllers/pageController";
 import Latus from "./latus";
 import {DualRangeInput} from "./components/dualRangeInput";
+import {User} from "./models/user";
+import {UserInterface} from "./models/interfaces/userInterface";
+import {UserController} from "./controllers/userController";
+import {FilterableTable} from "./components/filterableTable";
+import {UnitConverter} from "./components/unitConverter";
+import {Role} from "./models/role";
+import {RoleInterface} from "./models/interfaces/roleInterface";
+import {RoleController} from "./controllers/roleController";
+import {RoleMultiAdd} from "./components/roleMultiAdd";
 
 window.latus = Latus;
 
@@ -26,6 +35,9 @@ function defineElements() {
 
     //window.customElements.define('latus::upload-button', UploadButton, {extends: 'button'});
     window.customElements.define('latus-dual-range-input', DualRangeInput, {extends: 'div'});
+    window.customElements.define('latus-filterable-table', FilterableTable, {extends: 'div'});
+    window.customElements.define('latus-unit-converter', UnitConverter, {extends: 'input'});
+    window.customElements.define('latus-role-multi-add', RoleMultiAdd, {extends: 'div'});
 }
 
 function registerCrud() {
@@ -38,6 +50,30 @@ function registerCrud() {
         },
         controller: function () {
             return new PageController()
+        }
+    });
+
+    window.latus.CRUD.registerCrud('user', {
+        model: function (attributes) {
+            return new User(attributes);
+        },
+        crudInterface: function () {
+            return new UserInterface()
+        },
+        controller: function () {
+            return new UserController()
+        }
+    });
+
+    window.latus.CRUD.registerCrud('role', {
+        model: function (attributes) {
+            return new Role(attributes);
+        },
+        crudInterface: function () {
+            return new RoleInterface()
+        },
+        controller: function () {
+            return new RoleController()
         }
     });
 }

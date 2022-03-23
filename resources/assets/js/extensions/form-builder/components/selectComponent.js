@@ -87,10 +87,27 @@ export class SelectComponent {
         }
 
         if (this._options) {
-            for (let [value, label] of Object.entries(this._options)) {
+            for (let [value, labelOrObject] of Object.entries(this._options)) {
+                let label, isDefault = false;
+
+                if (typeof labelOrObject === 'object') {
+                    if (labelOrObject?.isDefault) {
+                        isDefault = true;
+                    }
+
+                    label = labelOrObject.label;
+                } else {
+                    label = labelOrObject;
+                }
+
                 let optionElement = document.createElement('option');
                 optionElement.value = value;
                 optionElement.innerText = label;
+
+                if (isDefault) {
+                    optionElement.selected = true;
+                }
+
                 selectElement.appendChild(optionElement);
             }
         }
