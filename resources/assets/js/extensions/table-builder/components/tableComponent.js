@@ -20,8 +20,51 @@ export class TableComponent {
         let $this = this;
 
         this._element.addEventListener('latus::rebuild', function (event) {
-            $this.render();
+            let newPage = window.latus.hasOwnProperty('toPage') ? window.latus.toPage : 1;
+
+            $this.render(newPage);
         });
+    }
+
+    _registerSwitchPageListeners() {
+        let navItems = this._getNavigationItems();
+
+        let $this = this;
+
+        navItems.forEach(function (element) {
+            element.querySelector('a.page-link').addEventListener('click', function (event) {
+                let target = event.currentTarget;
+                let targetPage = target.getAttribute('data-latus-page');
+                
+                if (element.classList.contains('disabled') || $this._currentPage.toString() === targetPage.toString()) {
+                    event.preventDefault();
+                }
+
+                $this._switchPage(targetPage);
+            });
+        });
+    }
+
+    _switchPage(targetPage) {
+        let numericTargetPage;
+
+        let currentPage = this._currentPage ?? 1;
+
+        if (targetPage === 'previous') {
+            numericTargetPage = Number(currentPage) - 1;
+        } else if (targetPage === 'next') {
+            numericTargetPage = Number(currentPage) + 1;
+        } else {
+            numericTargetPage = Number(targetPage);
+        }
+
+        window.latus.toPage = numericTargetPage;
+
+        this._element.dispatchEvent(new Event('latus::rebuild'));
+    }
+
+    _getNavigationItems() {
+        return document.getElementById(this._targetId).querySelectorAll('.js-latus-page-nav .page-item');
     }
 
     fills(callback) {
@@ -151,7 +194,7 @@ export class TableComponent {
 
         let $this = this;
 
-        await this._fillCallback(this._currentPage).then(function (paginator) {
+        return await this._fillCallback(this._currentPage).then(function (paginator) {
 
             for (const [key, item] of Object.entries(paginator.items)) {
                 if (paginator.hasOwnProperty('callback')) {
@@ -165,9 +208,11 @@ export class TableComponent {
             parentElement.appendChild($this._element);
 
             parentElement.appendChild($this._createPagination(paginator.current_page, paginator.last_page));
+
+            $this._registerSwitchPageListeners();
+
+            return paginator;
         });
-
-
     }
 
     addColumn({name, label, clearWidth = false, cellClasses = null}) {
