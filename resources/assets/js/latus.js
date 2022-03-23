@@ -13,6 +13,7 @@ import {fetchExposedData} from "./utilities/fetchExposedData";
 import {UI} from "./ui/ui";
 import {Builder as TableBuilder} from "./extensions/extendable-table/builder";
 import {Builder as DataTableBuilder} from "./extensions/table-builder/builder";
+import {AuthorizationService, userCan} from "./services/authorizationService";
 
 const Latus = {
     _currentModel: null,
@@ -37,6 +38,7 @@ const Latus = {
             if (!window.hasOwnProperty('exposed')) {
                 window.exposed = {};
             }
+
             for (const [key, value] of Object.entries(data)) {
                 if (window.exposed.hasOwnProperty(key)) {
                     Object.assign(window.exposed[key], value);
@@ -59,7 +61,9 @@ const Latus = {
             Object.assign(window.exposed.routes, baseRoutes);
 
             document.dispatchEvent(new Event('latus.booted'));
-        })
+        });
+
+        AuthorizationService.fetchActionValues();
     },
 
     currentModel() {
@@ -92,6 +96,10 @@ const Latus = {
 
     route(key, parameters = {}) {
         return route(key, parameters);
+    },
+
+    userCan(action) {
+        return userCan(action);
     },
 
     extendable: {

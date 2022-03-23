@@ -12,6 +12,10 @@ import {UserInterface} from "./models/interfaces/userInterface";
 import {UserController} from "./controllers/userController";
 import {FilterableTable} from "./components/filterableTable";
 import {UnitConverter} from "./components/unitConverter";
+import {Role} from "./models/role";
+import {RoleInterface} from "./models/interfaces/roleInterface";
+import {RoleController} from "./controllers/roleController";
+import {RoleMultiAdd} from "./components/roleMultiAdd";
 
 window.latus = Latus;
 
@@ -33,6 +37,7 @@ function defineElements() {
     window.customElements.define('latus-dual-range-input', DualRangeInput, {extends: 'div'});
     window.customElements.define('latus-filterable-table', FilterableTable, {extends: 'div'});
     window.customElements.define('latus-unit-converter', UnitConverter, {extends: 'input'});
+    window.customElements.define('latus-role-multi-add', RoleMultiAdd, {extends: 'div'});
 }
 
 function registerCrud() {
@@ -57,6 +62,18 @@ function registerCrud() {
         },
         controller: function () {
             return new UserController()
+        }
+    });
+
+    window.latus.CRUD.registerCrud('role', {
+        model: function (attributes) {
+            return new Role(attributes);
+        },
+        crudInterface: function () {
+            return new RoleInterface()
+        },
+        controller: function () {
+            return new RoleController()
         }
     });
 }

@@ -1,14 +1,14 @@
 import {Model} from "./model";
 
-export class User extends Model {
+export class Role extends Model {
     gatherAttributes() {
-        let roles = this.#getRolesInputValue().split(',');
+        let childRoles = this.#getRolesInputValue().split(',');
 
-        if (roles[0] === '') {
-            roles = [];
+        if (childRoles[0] === '') {
+            childRoles = [];
         }
 
-        return Object.assign(this.#gatherGroup('user'), {roles: roles});
+        return Object.assign(this.#gatherGroup('role'), {roles: childRoles});
     }
 
     #getRolesInputValue() {
@@ -59,6 +59,14 @@ export class User extends Model {
     }
 
     mutateData(mutateFor) {
-
+        switch (mutateFor) {
+            case 'viewModal':
+                return {}
+            case 'deleteModal':
+                return {
+                    id: this.attribute('id'),
+                    name: this.attribute('name'),
+                }
+        }
     }
 }

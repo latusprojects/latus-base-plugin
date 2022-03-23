@@ -24,7 +24,8 @@ export class UserService extends ModelService {
             paginate: {
                 name: 'users.paginate',
                 params: []
-            }
+            },
+            addableRoles: 'users.addableRoles'
         });
 
         this._model = 'user';

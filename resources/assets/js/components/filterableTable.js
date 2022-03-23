@@ -97,6 +97,8 @@ export class FilterableTable extends HTMLDivElement {
 
         filterInputs.forEach(function (element) {
             element.addEventListener('change', function (event) {
+                window.latus.toPage = 1;
+
                 let tableElement = document.getElementById(targetId).querySelector('table');
                 tableElement.dispatchEvent(new Event('latus::rebuild'));
             });
