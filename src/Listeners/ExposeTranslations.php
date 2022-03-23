@@ -12,8 +12,10 @@ class ExposeTranslations
     public function handle(ExposesData $event)
     {
         $navTranslations = $this->prefixArrayKeys($this->lhPrefix . 'nav.', Lang::get('latus::nav'));
+        $roleTranslations = $this->prefixArrayKeys($this->lhPrefix . 'role.', Lang::get('latus::role'));
+        $userTranslations = $this->prefixArrayKeys($this->lhPrefix . 'user.', Lang::get('latus::user'));
 
-        $event->exposedDataService()->expose('trans', $navTranslations);
+        $event->exposedDataService()->expose('trans', $navTranslations + $roleTranslations + $userTranslations);
     }
 
     protected function prefixArrayKeys(string $prefix, array $array): array

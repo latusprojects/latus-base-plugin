@@ -5,11 +5,18 @@ namespace Latus\BasePlugin\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
-use Latus\BasePlugin\Paginators\FilterablePaginator;
-use Latus\BasePlugin\Services\UserService;
+use Latus\BasePlugin\Http\Requests\User\StoreUserRequest;
+use Latus\BasePlugin\Http\Requests\User\UpdateUserRequest;
+use Latus\BasePlugin\Policies\UserPolicy;
+use Latus\BasePlugin\Services\UserIndexService;
+use Latus\BasePlugin\Services\UserValidationService;
 use Latus\BasePlugin\UI\Widgets\AdminNav;
+use Latus\Permissions\Models\Role;
 use Latus\Permissions\Models\User;
+use Latus\Permissions\Services\RoleService;
+use Latus\Permissions\Services\UserService;
 use Latus\UI\Services\ComponentService;
 
 class UserController extends AdminController
@@ -21,52 +28,9 @@ class UserController extends AdminController
         $this->authorizeResource(User::class, 'targetUser');
     }
 
-    protected function getFilteredPaginator(UserService $userService): FilterablePaginator
+    public function index(UserIndexService $userService): View|JsonResponse
     {
-        $paginator = $userService->paginate(15,
-            function ($user) {
-                return auth()->user()->can('view', $user);
-            },
-            function ($targetUser) {
-
-                /** @var User $targetUser */
-                $targetUser->can_be_updated = Gate::allows('update', $targetUser);
-                $targetUser->can_be_deleted = Gate::allows('delete', $targetUser);
-                $targetUser->can_be_viewed = Gate::allows('view', $targetUser);
-                $targetUser->roles = $targetUser->roles()->pluck('name')->implode(',');
-
-                return $targetUser;
-            }
-        );
-
-        if (($sortBy = \request()->query('sort')) && in_array($sortBy, ['id', 'email', 'created_at'])) {
-            $sortDescending = (bool)\request()->query('sortDesc', false);
-
-            $paginator->setCollection($paginator->sortBy(callback: function ($user, $key) use ($sortBy) {
-                return match ($sortBy) {
-                    'id' => $user->id,
-                    'email' => $user->email,
-                    'created_at' => $user->created_at,
-                };
-            }, descending: $sortDescending)->values());
-        }
-
-        if (!($textFilter = \request()->query('search'))) {
-            return $paginator;
-        }
-
-        return $paginator->filterItems(function ($item) use ($textFilter) {
-            if (str_starts_with($textFilter, '#')) {
-                return str_contains($item->id, str_replace('#', '', $textFilter));
-            }
-
-            return str_contains($item->email, $textFilter);
-        });
-    }
-
-    public function index(UserService $userService): View|JsonResponse
-    {
-        $paginator = $this->getFilteredPaginator($userService);
+        $paginator = $userService->paginateAndFilter();
 
         if (\request()->wantsJson()) {
             return response()->json([
@@ -77,35 +41,118 @@ class UserController extends AdminController
             ]);
         }
 
-        return $this->returnView(view('latus::admin.user.index')->with(['paginator' => $paginator]), 'page.index');
+        return $this->returnView(view('latus::admin.user.index')->with(['paginator' => $paginator]), 'user.index');
     }
 
-    public function create()
+    public function addableRoles(RoleService $roleService, User|null $targetUser = null): JsonResponse
+    {
+        $this->authorize('viewAny', Role::class);
+
+        $allRoles = $roleService->all();
+
+        $roles = $allRoles->filter(function (Role $role) use ($targetUser) {
+            return (!$targetUser || !$targetUser->is($role)) && app(UserPolicy::class)->addRole(auth()->user(), $role, $targetUser);
+        });
+
+        return response()->json([
+            'roles' => $roles->map(function (Role $role) {
+                return collect($role)->only(['id', 'level', 'name']);
+            }),
+            'addedRoles' => $targetUser?->roles()->get(['roles.id', 'roles.name', 'roles.level'])
+        ]);
+    }
+
+    public function create(): View
     {
         return $this->returnView(view('latus::admin.user.create'), 'user.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request, UserService $userService)
     {
-        //
+        $validatedInput = $request->validated();
+
+        try {
+            /** @var User $user */
+            $user = $userService->createUser([
+                'name' => $validatedInput['name'],
+                'email' => $validatedInput['email'],
+                'password' => $validatedInput['password']
+            ]);
+
+            if (!empty($validatedInput['roles'])) {
+                foreach ($validatedInput['roles'] as $role) {
+                    $user->roles()->attach($role);
+                }
+            }
+
+        } catch (\InvalidArgumentException $exception) {
+            return response()->latusFailed(status: 422, message: 'user-service attribute validation failed');
+        }
+
+        return response()->latusSuccess(message: 'user created', data: [
+            'created_at' => $user->getCreatedAtColumn(),
+            'id' => $user->id,
+        ]);
     }
 
-    public function show($id)
+    public function show(User $targetUser)
     {
-        //
+
     }
 
-    public function edit($id)
+    public function edit(User $targetUser): View
     {
-        //
+        return $this->returnView(view('latus::admin.user.edit', ['user' => $targetUser]), 'user.edit');
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $targetUser, UserService $userService, UserValidationService $userValidationService)
     {
-        //
+        $validatedInput = $request->validated();
+
+        $userCanUpdatePermissions = Gate::allows('updatePermissions', $targetUser);
+
+        if ($userCanUpdatePermissions && !$userValidationService->rolesCanBeSet($targetUser, $validatedInput['roles'])) {
+            return response()->latusFailed(status: 422, message: 'could not set roles: insufficient permissions');
+        }
+
+        try {
+            if (!$validatedInput['password']) {
+                unset($validatedInput['password']);
+            }
+
+            $userService->updateUser($targetUser, [
+                'name' => $validatedInput['name'],
+                'email' => $validatedInput['email'],
+            ]);
+
+            if ($userCanUpdatePermissions) {
+
+                foreach ($targetUser->roles()->get() as $role) {
+                    if (!in_array($role->id, $validatedInput['roles'])) {
+                        $targetUser->roles()->detach($role->id);
+                    }
+                }
+
+                if (!empty($validatedInput['roles'])) {
+                    foreach ($validatedInput['roles'] as $role) {
+                        if (!$targetUser->roles()->find($role)) {
+                            $targetUser->roles()->attach($role);
+                        }
+                    }
+                }
+            }
+
+        } catch (\InvalidArgumentException $exception) {
+            return response()->latusFailed(status: 422, message: 'user-service attribute validation failed');
+        }
+
+        return response()->latusSuccess(message: 'user updated', data: [
+            'updated_at' => $targetUser->getUpdatedAtColumn(),
+            'id' => $targetUser->id,
+        ]);
     }
 
-    public function destroy($id)
+    public function destroy(User $targetUser)
     {
         //
     }
