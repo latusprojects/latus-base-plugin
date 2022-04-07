@@ -13,11 +13,17 @@ use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
 use UniSharp\LaravelFilemanager\Lfm;
 
+$webMiddleware = ['web', 'resolve-module:' . WebModule::class];
+
+if (env('MAINTENANCE') === true) {
+    $webMiddleware[] = 'auth';
+}
+
 /*
  * Module: Web
  * Routes for basic functionality
  */
-Route::middleware(['web', 'resolve-module:' . WebModule::class])->group(function () {
+Route::middleware($webMiddleware)->group(function () {
 
     $webRoutes = function () {
         Route::get('/page/{page_id}', [WebController::class, 'showPage']);
