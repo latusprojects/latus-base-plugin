@@ -14,6 +14,7 @@ import {UI} from "./ui/ui";
 import {Builder as TableBuilder} from "./extensions/extendable-table/builder";
 import {Builder as DataTableBuilder} from "./extensions/table-builder/builder";
 import {AuthorizationService, userCan} from "./services/authorizationService";
+import {NumberFormatter} from "./extensions/numbers/NumberFormatter";
 
 const Latus = {
     _currentModel: null,
@@ -118,6 +119,10 @@ const Latus = {
         form: FormBuilder,
         table: TableBuilder,
         dataTable: DataTableBuilder,
+    },
+
+    format: {
+        number: (number, decimals = 0, digits = 20) => NumberFormatter.format(number, decimals, digits),
     },
 
     fillers: {}
