@@ -1,6 +1,4 @@
-let components = {
-    'find-vehicle-widget': [FindVehicle, {extends: 'div'}]
-}
+let components = {}
 
 export function defineComponents() {
     for (let [componentName, component] of Object.entries(components)) {
