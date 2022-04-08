@@ -3,8 +3,11 @@
 namespace Latus\BasePlugin\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Latus\BasePlugin\Http\Controllers\AdminController;
 use Latus\BasePlugin\Http\Controllers\AuthController;
 use Latus\BasePlugin\Http\Controllers\WebController;
@@ -110,6 +113,11 @@ class PluginServiceProvider extends ServiceProvider
         Blade::component('latus-comp::crud.editPage', 'latus.editPage');
         Blade::component('latus-comp::crud.indexPage', 'latus.indexPage');
 
+        URL::forceRootUrl(Config::get('app.url'));
+
+        if (Str::contains(Config::get('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
     }
 
     protected function createMacros()
