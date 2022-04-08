@@ -10,6 +10,8 @@ class AttachJsAssets
 {
     public function handle(IncludesJsAssets $event)
     {
+        $event->assetService()->attachJs(url: '//unpkg.com/@ungap/custom-elements');
+
         $event->assetService()->attachJs(url: asset('assets/vendor/latusprojects/latus-base-plugin/admin.js'), defer: true, shouldShow: function () {
             return CURRENT_MODULE === AdminModule::class;
         });
