@@ -1,9 +1,7 @@
 import {Form} from "./components/elements/form";
-import {FindVehicle} from "../../components/widgets/findVehicle";
 
 let components = {
     'lh-fb-form': [Form, {extends: 'form'}],
-    'find-vehicle-widget': [FindVehicle, {extends: 'div'}]
 }
 
 export function defineComponents() {
