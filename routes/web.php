@@ -7,13 +7,14 @@ use Latus\BasePlugin\Http\Controllers\PageController;
 use Latus\BasePlugin\Http\Controllers\RoleController;
 use Latus\BasePlugin\Http\Controllers\UserController;
 use Latus\BasePlugin\Http\Controllers\WebController;
+use Latus\BasePlugin\Http\Middleware\Cors;
 use Latus\BasePlugin\Http\Middleware\VerifyUserCanViewAdminModule;
 use Latus\BasePlugin\Modules\Contracts\AdminModule;
 use Latus\BasePlugin\Modules\Contracts\AuthModule;
 use Latus\BasePlugin\Modules\Contracts\WebModule;
 use UniSharp\LaravelFilemanager\Lfm;
 
-$webMiddleware = ['web', 'resolve-module:' . WebModule::class];
+$webMiddleware = ['web', 'resolve-module:' . WebModule::class, Cors::class];
 
 if (env('MAINTENANCE') === true) {
     $webMiddleware[] = 'auth';
@@ -42,7 +43,7 @@ Route::middleware($webMiddleware)->group(function () {
  * Module: Admin
  * Routes for basic functionality
  */
-Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-module:' . AdminModule::class])->group(function () {
+Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-module:' . AdminModule::class, Cors::class])->group(function () {
 
     $adminRoutesPrefix = config('latus-routes.admin_routes_prefix');
 
@@ -73,7 +74,7 @@ Route::middleware(['web', 'auth', VerifyUserCanViewAdminModule::class, 'resolve-
  * Module: Auth
  * Routes for basic functionality
  */
-Route::middleware(['web', 'resolve-module:' . AuthModule::class])->group(function () {
+Route::middleware(['web', 'resolve-module:' . AuthModule::class, Cors::class])->group(function () {
 
     $authRoutesPrefix = config('latus-routes.auth_routes_prefix');
 
